@@ -52,8 +52,8 @@ public class NFCActivity extends ActionBarActivity {
 	private Node node;
 	private ArrayList<Node> answeredNodesList;
 	private String errorString="";
-	private User user;
-	private Quest quest;
+    private int userId;
+    private int questId;
 	private int userQuestPk;
 	Data data;
 	
@@ -69,9 +69,26 @@ public class NFCActivity extends ActionBarActivity {
 		setContentView(R.layout.activity_nfc);
 		
 		data = (Data) getApplicationContext();
-		quest = data.getQuest();
-		user = data.getUser();
-		userQuestPk = data.getUserQuestPk();
+
+        if(savedInstanceState != null){
+            questId = savedInstanceState.getInt("questId");
+            userId = savedInstanceState.getInt("userId");
+            userQuestPk = savedInstanceState.getInt("userQuestPk");
+
+            int dtRegistration = savedInstanceState.getInt("dtRegistration");
+
+            Quest quest = new Quest();
+            quest.setDtRegistration(dtRegistration);
+            quest.setId(questId);
+
+            data.setUserQuestPk(userQuestPk);
+            data.setQuest(quest);
+            data.setUser(new User(userId));
+        } else {
+            questId = data.getQuest().getId();
+            userId = data.getUser().getId();
+            userQuestPk = data.getUserQuestPk();
+        }
 		
 		AppDown.register(this); // Methode für das Beenden der Applikation
 		
@@ -341,10 +358,10 @@ public class NFCActivity extends ActionBarActivity {
         protected Void doInBackground(Void... params) {
 
 			answeredNodesList = new ArrayList<Node>();
-            
-            System.out.println("Hier" + quest.getId());
+
+            System.out.println("Hier" + questId);
             try {
-                nodes = QuestMethods.getNodes(quest.getId());
+                nodes = QuestMethods.getNodes(questId);
                 
                 nodeIds = QuestMethods.getFinishedNodes(userQuestPk);
 
@@ -402,6 +419,16 @@ public class NFCActivity extends ActionBarActivity {
         if (!enable.isWIFIEnabled() && !enable.isGPSenabled()) {
             enable.enableAll();
         }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+
+        savedInstanceState.putInt("userQuestPk", userQuestPk);
+        savedInstanceState.putInt("questId", questId);
+        savedInstanceState.putInt("userId", userId);
+        savedInstanceState.putInt("dtRegistration", data.getQuest().getDtRegistration());
     }
 
 }

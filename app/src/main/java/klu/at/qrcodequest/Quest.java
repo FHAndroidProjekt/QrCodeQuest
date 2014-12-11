@@ -10,7 +10,6 @@ public class Quest {
 	private String name;				//Name der Quest
 	private String description;			//Questbeschreibung
 	public Quest(){
-		
 	}
 	public Quest(int id, int active, int sequence, int dtOwner,
 			int dtRegistration, String name, String description) {
@@ -26,7 +25,11 @@ public class Quest {
 	public Quest(String name){
 		this.name = name;
 	}
-	
+
+    public Quest(int id) {
+        super();
+        this.id = id;
+    }
 
 	public Quest(int id, String name, int dtRegistration) {
 		super();

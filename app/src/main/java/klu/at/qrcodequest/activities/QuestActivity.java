@@ -31,6 +31,7 @@ public class QuestActivity extends ActionBarActivity /*implements OnItemClickLis
     private ArrayList<Quest> quests = new ArrayList<>();
     private int finished = 0;
     private User user;
+    private int userId;
     private SparseIntArray userQuestMap = new SparseIntArray();
 
 
@@ -40,7 +41,14 @@ public class QuestActivity extends ActionBarActivity /*implements OnItemClickLis
         setContentView(R.layout.activity_quest);
 
         Data data = (Data) getApplicationContext();
-        user = data.getUser();
+
+        if (savedInstanceState != null){
+            userId = savedInstanceState.getInt("userId");
+            data.setUser(new User(userId));
+        }else{
+            user = data.getUser();
+            userId = data.getUser().getId();
+        }
 
         AppDown.register(this);
 
@@ -101,7 +109,7 @@ public class QuestActivity extends ActionBarActivity /*implements OnItemClickLis
     private void getUserQuests() {
 
         for (final Quest quest : quests) {
-            String url = ("http://193.171.127.102:8080/Quest/userQuest/get?userPk=" + user.getId() + "&questPk=" + quest.getId());
+            String url = ("http://193.171.127.102:8080/Quest/userQuest/get?userPk=" + userId + "&questPk=" + quest.getId());
 
             JsonArrayRequest jsObjRequest = new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
                 @Override
@@ -147,7 +155,7 @@ public class QuestActivity extends ActionBarActivity /*implements OnItemClickLis
             values.add(quest.getName()); //speichert die Namen der Quest in die ArrayList
         }
 
-        ExpandableListAdapter adapter = new ExpandableListAdapter(getApplicationContext(), values, quests, userQuestMap, user.getId());
+        ExpandableListAdapter adapter = new ExpandableListAdapter(getApplicationContext(), values, quests, userQuestMap, userId);
         list.setAdapter(adapter);
 
         bar.setVisibility(View.INVISIBLE);
@@ -192,6 +200,12 @@ public class QuestActivity extends ActionBarActivity /*implements OnItemClickLis
         dialog.show();
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle savedInstanceState) {
+        // TODO Auto-generated method stub
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putInt("userId", userId);
+    }
 
 }
 
