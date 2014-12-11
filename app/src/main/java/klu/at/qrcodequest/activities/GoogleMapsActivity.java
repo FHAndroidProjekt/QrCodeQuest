@@ -21,9 +21,10 @@ import android.content.Intent;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.widget.Toast;
 
-public class GoogleMapsActivity extends Activity implements OnMyLocationChangeListener {
+public class GoogleMapsActivity extends ActionBarActivity implements OnMyLocationChangeListener {
 
 	private GoogleMap map;
 	private int questPk;

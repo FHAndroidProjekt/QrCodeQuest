@@ -3,6 +3,7 @@ package klu.at.qrcodequest.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
@@ -23,7 +24,7 @@ import org.json.JSONObject;
 
 import java.util.*;
 
-public class QuestionsActivity extends Activity {
+public class QuestionsActivity extends ActionBarActivity {
 
     private static ArrayList <Question> questions;
     private SparseArray<String> answerSparseArray = new SparseArray<>();

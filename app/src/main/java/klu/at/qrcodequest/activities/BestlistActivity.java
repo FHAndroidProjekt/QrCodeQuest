@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TableLayout;
@@ -20,7 +21,7 @@ import java.util.*;
 import java.util.Map.Entry;
 
 
-public class BestlistActivity extends Activity {
+public class BestlistActivity extends ActionBarActivity {
 
     ArrayList<Score> scores = new ArrayList<Score>();
     ArrayList<Score> bldata = new ArrayList<Score>();

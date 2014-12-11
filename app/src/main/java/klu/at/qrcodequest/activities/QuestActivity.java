@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.SparseBooleanArray;
 import android.util.SparseIntArray;
 import android.view.View;
@@ -23,7 +24,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 
-public class QuestActivity extends Activity /*implements OnItemClickListener*/ {
+public class QuestActivity extends ActionBarActivity /*implements OnItemClickListener*/ {
 
     private ExpandableListView list;
     private ProgressBar bar;

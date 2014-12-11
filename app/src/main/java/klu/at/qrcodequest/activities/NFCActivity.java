@@ -28,6 +28,7 @@ import android.nfc.Tag;
 import android.nfc.tech.Ndef;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ExpandableListView;
@@ -36,7 +37,7 @@ import android.widget.Toast;
 import android.widget.ExpandableListView.OnGroupExpandListener;
 
 
-public class NFCActivity extends Activity {
+public class NFCActivity extends ActionBarActivity {
 	
 	public final String MIME_TEXT_PLAIN = "text/plain";
 	
