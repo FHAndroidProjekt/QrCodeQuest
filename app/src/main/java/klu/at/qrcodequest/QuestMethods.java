@@ -26,6 +26,12 @@ public class QuestMethods {
 
 		return nodes;
 	}
+
+    public static void getFinishedQuestions(){
+
+
+
+    }
     
     public static ArrayList<Score> getScore(int questPk) throws IOException, JSONException{
     	
