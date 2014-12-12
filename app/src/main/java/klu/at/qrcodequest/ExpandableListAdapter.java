@@ -34,13 +34,15 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 	private List<Quest> quests;
 	private SparseIntArray userQuestMap;
 	private int userPk;
+    private Data data;
 	
-	public ExpandableListAdapter(Context context, List<String> listParents, ArrayList<Quest> quests, SparseIntArray userQuestMap, int userPk) {
+	public ExpandableListAdapter(Data data, Context context, List<String> listParents, ArrayList<Quest> quests, SparseIntArray userQuestMap, int userPk) {
 		this.context = context;
 		this.listParents = listParents;
 		this.quests = quests;
 		this.userQuestMap = userQuestMap;
 		this.userPk = userPk;
+        this.data = data;
 	}
 	
 	@Override
@@ -202,6 +204,14 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 		protected Void doInBackground(Integer... params) {
 			try {
 				QuestMethods.setUserQuest(userPk, quests.get((int)getGroupId(params[0])).getId());
+
+//                int userQuestPk = QuestMethods.getUserQuestPk(userPk, quests.get((int)getGroupId(params[0])).getId());
+
+
+//                System.out.println("" + userQuestPk);
+//
+//                data.setUserQuestPk(userQuestPk);
+
 			} catch (JSONException | IOException e) {
 				e.printStackTrace();
 			}

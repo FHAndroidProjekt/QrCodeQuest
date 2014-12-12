@@ -85,6 +85,17 @@ public class QuestMethods {
     		return true;
     	}
     }
+
+    public static int getUserQuestPk (int userId, int questId) throws JSONException, IOException {
+        String json = HTTPHelper.makeGetRequest("http://193.171.127.102:8080/Quest/userQuest/get?userPk=" + userId + "&questPk=" + questId);
+
+        System.out.println("" + json);
+        JSONObject obj = new JSONArray(json).getJSONObject(0);
+
+        int userQuestPk = obj.getInt("id");
+
+        return userQuestPk;
+    }
     
     public static ArrayList<Integer> getFinishedNodes(int userQuestPk) throws IOException, JSONException{
  	   
@@ -105,7 +116,10 @@ public class QuestMethods {
     		
     		nodeIds.add(nodePk);
     	}
-    
+
+        if(nodeIds == null){
+            return null;
+        }
     	return nodeIds;
     }
      

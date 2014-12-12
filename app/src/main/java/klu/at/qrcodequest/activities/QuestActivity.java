@@ -32,6 +32,7 @@ public class QuestActivity extends ActionBarActivity /*implements OnItemClickLis
     private int finished = 0;
     private User user;
     private int userId;
+    private Data data;
     private SparseIntArray userQuestMap = new SparseIntArray();
 
 
@@ -40,7 +41,7 @@ public class QuestActivity extends ActionBarActivity /*implements OnItemClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quest);
 
-        Data data = (Data) getApplicationContext();
+        data = (Data) getApplicationContext();
 
         if (savedInstanceState != null){
             userId = savedInstanceState.getInt("userId");
@@ -155,7 +156,7 @@ public class QuestActivity extends ActionBarActivity /*implements OnItemClickLis
             values.add(quest.getName()); //speichert die Namen der Quest in die ArrayList
         }
 
-        ExpandableListAdapter adapter = new ExpandableListAdapter(getApplicationContext(), values, quests, userQuestMap, userId);
+        ExpandableListAdapter adapter = new ExpandableListAdapter(data, getApplicationContext(), values, quests, userQuestMap, userId);
         list.setAdapter(adapter);
 
         bar.setVisibility(View.INVISIBLE);

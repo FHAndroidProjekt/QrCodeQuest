@@ -29,6 +29,7 @@ public class MainActivity extends ActionBarActivity {
     private String errorString = "";
     private ProgressBar bar;
     private int userQuestPk;
+    private int userPk;
 
     private ExpandableListView list;
 
@@ -41,7 +42,9 @@ public class MainActivity extends ActionBarActivity {
 
         Data data = (Data)getApplicationContext();
         quest = data.getQuest();
+        userPk = data.getUser().getId();
         userQuestPk = data.getUserQuestPk();
+        System.out.println("asdfasfasdf" + userQuestPk);
         
         Button btscan = (Button) findViewById(R.id.weiter);
         list = (ExpandableListView) findViewById(R.id.listView1);
@@ -133,7 +136,15 @@ public class MainActivity extends ActionBarActivity {
 
             try {
                 nodes = QuestMethods.getNodes(quest.getId());
+
+                if(userQuestPk == 0){
+                    userQuestPk = QuestMethods.getUserQuestPk(userPk, quest.getId());
+                }
+
+                System.out.println("" + userQuestPk);
                 ArrayList <Integer> nodeIds = QuestMethods.getFinishedNodes(userQuestPk);
+
+                System.out.println("" + nodeIds);
 
             } catch (JSONException e) {
                 e.printStackTrace();
