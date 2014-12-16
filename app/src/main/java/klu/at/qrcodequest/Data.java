@@ -1,6 +1,7 @@
 package klu.at.qrcodequest;
 
 import android.app.Application;
+import android.util.SparseIntArray;
 
 import java.util.ArrayList;
 
@@ -12,6 +13,7 @@ public class Data extends Application {
     private int userQuestNodePk;
     private ArrayList<Node> answeredNodeList = new ArrayList<Node>();
     private ArrayList<Node> nodeList = new ArrayList<Node>();
+    private SparseIntArray finishedQuestions;
 
     public User getUser() {
         return user;
@@ -67,8 +69,12 @@ public class Data extends Application {
 	public void setUserQuestNodePk(int userQuestNodePk) {
 		this.userQuestNodePk = userQuestNodePk;
 	}
-	
-	
-	
-    
+
+    public SparseIntArray getFinishedQuestions() {
+        return finishedQuestions;
+    }
+
+    public void setFinishedQuestions(SparseIntArray finishedQuestions) {
+        this.finishedQuestions = finishedQuestions;
+    }
 }

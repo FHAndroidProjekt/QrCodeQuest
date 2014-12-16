@@ -4,6 +4,8 @@ import com.google.gson.Gson;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import android.content.Context;
+import android.util.SparseIntArray;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -26,12 +28,6 @@ public class QuestMethods {
 
 		return nodes;
 	}
-
-    public static void getFinishedQuestions(){
-
-
-
-    }
     
     public static ArrayList<Score> getScore(int questPk) throws IOException, JSONException{
     	
@@ -103,7 +99,11 @@ public class QuestMethods {
         return userQuestPk;
     }
     
-    public static ArrayList<Integer> getFinishedNodes(int userQuestPk) throws IOException, JSONException{
+    public static ArrayList<Integer> getFinishedNodes(int userQuestPk, Context context) throws IOException, JSONException{
+
+        Data data = (Data) context.getApplicationContext();
+
+        SparseIntArray finishedQuestions = new SparseIntArray();
  	   
     	String json = HTTPHelper.makeGetRequest("http://193.171.127.102:8080/Quest/userQuest/done?userQuestPk=" + userQuestPk);
     	
@@ -115,13 +115,28 @@ public class QuestMethods {
     		
     		JSONObject obj = array.getJSONObject(i);
     		JSONObject nodeId = obj.getJSONObject("node");
+            JSONArray scores = obj.getJSONArray("scores");
+
+            for(int x = 0; x < scores.length(); x++){
+                JSONObject scoreEintrag = scores.getJSONObject(x);
+                int scoreId = scoreEintrag.getInt("id");
+                JSONObject question = scoreEintrag.getJSONObject("question");
+                int questionId = question.getInt("id");
+
+                System.out.println("questionId" + questionId + "  scoreId" + scoreId);
+                finishedQuestions.append(questionId, scoreId);
+
+            }
     		
     		int userQuestNodePk = obj.getInt("id");
-    		
+
     		int nodePk = nodeId.getInt("id");
     		
     		nodeIds.add(nodePk);
     	}
+
+        data.setFinishedQuestions(finishedQuestions);
+
 
         if(nodeIds == null){
             return null;
@@ -131,7 +146,7 @@ public class QuestMethods {
      
     
     public static String setUserQuestNode(int userquestId, int nodeId) throws JSONException, IOException{
-    	
+
     	JSONObject userquest = new JSONObject();
     	
     	userquest.put("id", userquestId);

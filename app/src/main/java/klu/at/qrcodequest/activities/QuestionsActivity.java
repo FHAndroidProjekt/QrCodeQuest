@@ -48,7 +48,7 @@ public class QuestionsActivity extends ActionBarActivity {
         data = (Data) getApplicationContext();
         node = data.getNode();
         quest = data.getQuest();
-        questionIDs = node.getQuestionIDs();
+        questionIDs = node.getUnfinishedQuestionIDs();
 
         TextView nodeText = (TextView) findViewById(R.id.textViewNode);
         nodeText.setText(node.getName());
@@ -116,13 +116,15 @@ public class QuestionsActivity extends ActionBarActivity {
     @Override
     public void onBackPressed() {
 
-        if (questionNumber > 0) {
-            questionNumber--;
-            shuffleAnswers();
-            generateNextQuestionWithAnswers();
-        } else {
-        	changeActivity();
-        }
+//        if (questionNumber > 0) {
+//            questionNumber--;
+//            shuffleAnswers();
+//            generateNextQuestionWithAnswers();
+//        } else {
+//        	changeActivity();
+//        }
+        Intent intent = new Intent(this, NFCActivity.class);
+        startActivity(intent);
     }
 
     public void generateNextQuestionWithAnswers() {

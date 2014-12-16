@@ -30,6 +30,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.util.SparseIntArray;
 import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.ProgressBar;
@@ -302,10 +303,37 @@ public class NFCActivity extends ActionBarActivity {
 							            	Intent questions = new Intent(getApplicationContext(), QuestionsActivity.class);
 
 							            	Data data = (Data) getApplicationContext();
-							
-							            	data.setNode(node);
 
-							            	startActivity(questions);
+                                            SparseIntArray finishedQuestions = data.getFinishedQuestions();
+                                            ArrayList<Integer>unfinishedQuestionsIds = new ArrayList<Integer>();
+
+                                            System.out.println("" + finishedQuestions);
+
+                        for(int i = 0; i < node.getQuestionIDs().length; i++) {
+                            if (finishedQuestions.indexOfKey(node.getQuestionIDs()[i]) < 0) {
+                                unfinishedQuestionsIds.add(node.getQuestionIDs()[i]);
+                                System.out.println("" + node.getQuestionIDs()[i]);
+                            }
+                        }
+                        int [] intArray = new int[unfinishedQuestionsIds.size()];
+
+                        for(int x = 0; x < unfinishedQuestionsIds.size(); x++){
+                            intArray[x] = unfinishedQuestionsIds.get(x);
+                        }
+
+                        node.setUnfinishedQuestionIDs(intArray);
+
+                            if(finishedQuestions.size() == node.getQuestionIDs().length){
+                                Toast.makeText(getApplicationContext(), "Sie haben bereits alle Fragen vollständig beantwortet", Toast.LENGTH_LONG).show();
+                            }else{
+
+                                data.setNode(node);
+
+                                startActivity(questions);
+                            }
+
+
+
                     }
 			}
 		}
@@ -345,7 +373,7 @@ public class NFCActivity extends ActionBarActivity {
 	
 	private class MainNodeTask extends AsyncTask<Void, Void, Void> {
 
-		
+
         @Override
 		protected void onPreExecute() {
 			// TODO Auto-generated method stub
@@ -363,7 +391,17 @@ public class NFCActivity extends ActionBarActivity {
             try {
                 nodes = QuestMethods.getNodes(questId);
                 
-                nodeIds = QuestMethods.getFinishedNodes(userQuestPk);
+                nodeIds = QuestMethods.getFinishedNodes(userQuestPk, getApplicationContext());
+
+                ArrayList <Integer> nodeIds = QuestMethods.getFinishedNodes(userQuestPk, getApplicationContext());
+
+                Data data = (Data)getApplicationContext();
+
+                SparseIntArray finishedQuestionIds = data.getFinishedQuestions();
+
+                for (int i = 0; i < finishedQuestionIds.size(); i++){
+                    System.out.println("Ausgabe : " +finishedQuestionIds.keyAt(i));
+                }
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -382,9 +420,14 @@ public class NFCActivity extends ActionBarActivity {
         protected void onPostExecute(Void result) {
             HTTPHelper.HTTPExceptionHandler(errorString, NFCActivity.this);
             bar.setVisibility(View.INVISIBLE);
-            
-            adapter = new ExpandableListViewNodes(getApplicationContext(), nodes, nodeIds);
-            list.setAdapter(adapter);
+
+//            if(unfinishedQuestions == null){
+//                Toast.makeText(getApplicationContext(),"Sie haben bereits alle Fragen beantwortet!", Toast.LENGTH_LONG).show();
+//            }else{
+                adapter = new ExpandableListViewNodes(getApplicationContext(), nodes, nodeIds);
+                list.setAdapter(adapter);
+//            }
+
         }
     }
 	

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.SparseIntArray;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -30,7 +31,7 @@ public class MainActivity extends ActionBarActivity {
     private ProgressBar bar;
     private int userQuestPk;
     private int userPk;
-
+    private Data data;
     private ExpandableListView list;
 
     @Override
@@ -40,7 +41,7 @@ public class MainActivity extends ActionBarActivity {
 
         AppDown.register(this);
 
-        Data data = (Data)getApplicationContext();
+        data = (Data)getApplicationContext();
         quest = data.getQuest();
         userPk = data.getUser().getId();
         userQuestPk = data.getUserQuestPk();
@@ -130,6 +131,7 @@ public class MainActivity extends ActionBarActivity {
     private class MainNodeTask extends AsyncTask<Void, Void, Void> {
     	
     	ArrayList <Integer> nodeIds = new ArrayList<Integer>();
+        ArrayList<Integer> unfinishedQuestions = new ArrayList<Integer>();
     	
 		@Override
         protected Void doInBackground(Void... params) {
@@ -140,9 +142,16 @@ public class MainActivity extends ActionBarActivity {
                 if(userQuestPk == 0){
                     userQuestPk = QuestMethods.getUserQuestPk(userPk, quest.getId());
                 }
-
+                ArrayList<Integer> unfinishedQuestions = new ArrayList<Integer>();
+                SparseIntArray finishedQuestions = data.getFinishedQuestions();
                 System.out.println("" + userQuestPk);
-                ArrayList <Integer> nodeIds = QuestMethods.getFinishedNodes(userQuestPk);
+                ArrayList <Integer> nodeIds = QuestMethods.getFinishedNodes(userQuestPk, getApplicationContext());
+
+                for (int i = 0; i< nodeIds.size(); i++){
+                    if(finishedQuestions.indexOfKey(nodeIds.get(i)) < 0){
+                        unfinishedQuestions.add(nodeIds.get(i));
+                    }
+                }
 
                 System.out.println("" + nodeIds);
 
@@ -164,9 +173,14 @@ public class MainActivity extends ActionBarActivity {
             HTTPHelper.HTTPExceptionHandler(errorString, MainActivity.this);
 
             bar.setVisibility(View.INVISIBLE);
-            
-            ExpandableListViewNodes adapter = new ExpandableListViewNodes(getApplicationContext(), nodes, nodeIds);
-            list.setAdapter(adapter);
+
+            if(unfinishedQuestions == null){
+                Toast.makeText(getApplicationContext(),"Sie haben bereits alle Fragen beantwortet!", Toast.LENGTH_LONG).show();
+            }else{
+                ExpandableListViewNodes adapter = new ExpandableListViewNodes(getApplicationContext(), nodes, unfinishedQuestions);
+                list.setAdapter(adapter);
+            }
+
         }
     }
 }

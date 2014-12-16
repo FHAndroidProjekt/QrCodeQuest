@@ -17,6 +17,8 @@ public class Node {
 	private String description;
 	private String location;
     private int[] questionIDs;
+    private int[] finishedQuestionIDs;
+    private int[] unfinishedQuestionIDs;
 	
 	
 	
@@ -35,7 +37,7 @@ public class Node {
 		this.description = description;
 		this.location = location;
 	}
-	
+
 	public Node(int id){
 		this.id = id;
 	}
@@ -46,9 +48,16 @@ public class Node {
 		this.id = id;
 		new Node(questPk, active, sequence, dtRegistration, registrationTarget1, registrationTarget2, name, description, location);
 	}
-	
-	
-	public int getDtRegistration() {
+
+    public int[] getUnfinishedQuestionIDs() {
+        return unfinishedQuestionIDs;
+    }
+
+    public void setUnfinishedQuestionIDs(int[] unfinishedQuestionIDs) {
+        this.unfinishedQuestionIDs = unfinishedQuestionIDs;
+    }
+
+    public int getDtRegistration() {
 		return dtRegistration;
 	}
 
@@ -72,7 +81,15 @@ public class Node {
 		this.registrationTarget2 = registrationTarget2;
 	}
 
-	public int getId() {
+    public int[] getFinishedQuestionIDs() {
+        return finishedQuestionIDs;
+    }
+
+    public void setFinishedQuestionIDs(int[] finishedQuestionIDs) {
+        this.finishedQuestionIDs = finishedQuestionIDs;
+    }
+
+    public int getId() {
 		return id;
 	}
 	public void setId(int id) {
