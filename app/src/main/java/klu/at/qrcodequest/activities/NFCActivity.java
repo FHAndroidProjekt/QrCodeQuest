@@ -338,7 +338,6 @@ public class NFCActivity extends ActionBarActivity {
                             }else{
 
                                 data.setNode(node);
-
                                 startActivity(questions);
                             }
 

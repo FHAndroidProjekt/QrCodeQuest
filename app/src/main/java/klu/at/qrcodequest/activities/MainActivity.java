@@ -114,7 +114,16 @@ public class MainActivity extends ActionBarActivity {
             if(result.getContents() == null) {
                 Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
             } else {
-                Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
+                for (Node node : nodes) {
+                    if (node.getRegistrationTarget1().equals(result.getContents())) {
+                        Intent questions = new Intent(getApplicationContext(), QuestionsActivity.class);
+
+                        Data data = (Data) getApplicationContext();
+                        data.setNode(node);
+
+                        startActivity(questions);
+                    }
+                }
             }
         } else {
             // This is important, otherwise the result will not be passed to the fragment
