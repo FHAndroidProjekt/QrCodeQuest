@@ -14,6 +14,15 @@ public class Data extends Application {
     private ArrayList<Node> answeredNodeList = new ArrayList<Node>();
     private ArrayList<Node> nodeList = new ArrayList<Node>();
     private SparseIntArray finishedQuestions;
+    private SparseIntArray userQuestNodePKs;
+
+    public SparseIntArray getUserQuestNodePKs() {
+        return userQuestNodePKs;
+    }
+
+    public void setUserQuestNodePKs(SparseIntArray userQuestNodePKs) {
+        this.userQuestNodePKs = userQuestNodePKs;
+    }
 
     public User getUser() {
         return user;

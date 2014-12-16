@@ -285,6 +285,7 @@ public class NFCActivity extends ActionBarActivity {
 				for (final Node node : nodes) {
 					System.out.println("nfcnode" + node);
                     if (node.getRegistrationTarget1()!= null && node.getRegistrationTarget1().equals(result)) {
+
                         System.out.println("" + node.getId());
 
 							int userQuestPk = (int)data.getUserQuestPk();
@@ -300,21 +301,29 @@ public class NFCActivity extends ActionBarActivity {
 								new UserQuestNodeTask().execute(userQuestPk, node.getId());
 								
 							}
+
 							            	Intent questions = new Intent(getApplicationContext(), QuestionsActivity.class);
 
 							            	Data data = (Data) getApplicationContext();
 
                                             SparseIntArray finishedQuestions = data.getFinishedQuestions();
                                             ArrayList<Integer>unfinishedQuestionsIds = new ArrayList<Integer>();
-
+                                            SparseIntArray userQuestNodePks = data.getUserQuestNodePKs();
                                             System.out.println("" + finishedQuestions);
 
                         for(int i = 0; i < node.getQuestionIDs().length; i++) {
                             if (finishedQuestions.indexOfKey(node.getQuestionIDs()[i]) < 0) {
+
                                 unfinishedQuestionsIds.add(node.getQuestionIDs()[i]);
                                 System.out.println("" + node.getQuestionIDs()[i]);
+                            }else{
+                                data.setUserQuestNodePk(userQuestNodePks.get(node.getQuestionIDs()[i]));
+
+                                System.out.println("UserQuestNodePk: " +  userQuestNodePks.get(node.getQuestionIDs()[i]));
                             }
                         }
+
+
                         int [] intArray = new int[unfinishedQuestionsIds.size()];
 
                         for(int x = 0; x < unfinishedQuestionsIds.size(); x++){
@@ -323,7 +332,8 @@ public class NFCActivity extends ActionBarActivity {
 
                         node.setUnfinishedQuestionIDs(intArray);
 
-                            if(finishedQuestions.size() == node.getQuestionIDs().length){
+                            System.out.println("Länge der Node Questions: " + node.getQuestionIDs().length + "Länge der unbeantworteten Fragen: " + unfinishedQuestionsIds.size());
+                            if((unfinishedQuestionsIds.size()) == 0){
                                 Toast.makeText(getApplicationContext(), "Sie haben bereits alle Fragen vollständig beantwortet", Toast.LENGTH_LONG).show();
                             }else{
 

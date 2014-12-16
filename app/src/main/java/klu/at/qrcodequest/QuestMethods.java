@@ -104,6 +104,8 @@ public class QuestMethods {
         Data data = (Data) context.getApplicationContext();
 
         SparseIntArray finishedQuestions = new SparseIntArray();
+
+        SparseIntArray userQuestNodePKs = new SparseIntArray();
  	   
     	String json = HTTPHelper.makeGetRequest("http://193.171.127.102:8080/Quest/userQuest/done?userQuestPk=" + userQuestPk);
     	
@@ -125,10 +127,11 @@ public class QuestMethods {
 
                 System.out.println("questionId" + questionId + "  scoreId" + scoreId);
                 finishedQuestions.append(questionId, scoreId);
-
+                userQuestNodePKs.append(questionId, obj.getInt("id"));
             }
     		
     		int userQuestNodePk = obj.getInt("id");
+            System.out.println("UserQuestNodePk in der Methode: " + userQuestNodePk);
 
     		int nodePk = nodeId.getInt("id");
     		
@@ -136,6 +139,7 @@ public class QuestMethods {
     	}
 
         data.setFinishedQuestions(finishedQuestions);
+        data.setUserQuestNodePKs(userQuestNodePKs);
 
 
         if(nodeIds == null){
