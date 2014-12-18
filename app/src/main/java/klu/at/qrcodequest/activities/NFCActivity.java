@@ -283,13 +283,9 @@ public class NFCActivity extends ActionBarActivity {
 //				System.out.println("Read content: " + result);
 				
 				for (final Node node : nodes) {
-					System.out.println("nfcnode" + node);
                     if (node.getRegistrationTarget1()!= null && node.getRegistrationTarget1().equals(result)) {
 
-                        System.out.println("" + node.getId());
-
 							int userQuestPk = (int)data.getUserQuestPk();
-							System.out.println("" + userQuestPk);
 							
 							boolean exist = false;
 							for (int x = 0; x < nodeIds.size(); x++){
@@ -301,7 +297,6 @@ public class NFCActivity extends ActionBarActivity {
 								new UserQuestNodeTask().execute(userQuestPk, node.getId());
 								
 							}
-
 							            	Intent questions = new Intent(getApplicationContext(), QuestionsActivity.class);
 
 							            	Data data = (Data) getApplicationContext();
@@ -322,7 +317,6 @@ public class NFCActivity extends ActionBarActivity {
                                 System.out.println("UserQuestNodePk: " +  userQuestNodePks.get(node.getQuestionIDs()[i]));
                             }
                         }
-
 
                         int [] intArray = new int[unfinishedQuestionsIds.size()];
 
@@ -377,7 +371,6 @@ public class NFCActivity extends ActionBarActivity {
 			
 			return null;
 		}
-		
 	}
 	
 	private class MainNodeTask extends AsyncTask<Void, Void, Void> {
@@ -394,23 +387,11 @@ public class NFCActivity extends ActionBarActivity {
 		@Override
         protected Void doInBackground(Void... params) {
 
-			answeredNodesList = new ArrayList<Node>();
-
-            System.out.println("Hier" + questId);
             try {
                 nodes = QuestMethods.getNodes(questId);
-                
+
                 nodeIds = QuestMethods.getFinishedNodes(userQuestPk, getApplicationContext());
 
-                ArrayList <Integer> nodeIds = QuestMethods.getFinishedNodes(userQuestPk, getApplicationContext());
-
-                Data data = (Data)getApplicationContext();
-
-                SparseIntArray finishedQuestionIds = data.getFinishedQuestions();
-
-                for (int i = 0; i < finishedQuestionIds.size(); i++){
-                    System.out.println("Ausgabe : " +finishedQuestionIds.keyAt(i));
-                }
 
             } catch (JSONException e) {
                 e.printStackTrace();

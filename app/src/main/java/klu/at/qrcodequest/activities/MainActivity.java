@@ -16,6 +16,8 @@ import android.widget.Toast;
 import klu.at.qrcodequest.*;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 
 import org.json.JSONException;
@@ -33,6 +35,7 @@ public class MainActivity extends ActionBarActivity {
     private int userPk;
     private Data data;
     private ExpandableListView list;
+    ArrayList<Integer> nodeIds = new ArrayList<Integer>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +48,6 @@ public class MainActivity extends ActionBarActivity {
         quest = data.getQuest();
         userPk = data.getUser().getId();
         userQuestPk = data.getUserQuestPk();
-        System.out.println("asdfasfasdf" + userQuestPk);
         
         Button btscan = (Button) findViewById(R.id.weiter);
         list = (ExpandableListView) findViewById(R.id.listView1);
@@ -115,13 +117,57 @@ public class MainActivity extends ActionBarActivity {
                 Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
             } else {
                 for (Node node : nodes) {
-                    if (node.getRegistrationTarget1().equals(result.getContents())) {
+                    if (node.getRegistrationTarget1() != null && node.getRegistrationTarget1().equals(result.getContents())) {
+
+                        int userQuestPk = (int)data.getUserQuestPk();
+
+                        boolean exist = false;
+
+                        for(int x = 0; x < nodeIds.size(); x++){
+                            if(node.getId() == nodeIds.get(x)){
+                                exist = true;
+                            }
+                        }
+                        if(exist == false){
+                            new UserQuestNodeTask().execute(userQuestPk, node.getId());
+                        }
                         Intent questions = new Intent(getApplicationContext(), QuestionsActivity.class);
 
                         Data data = (Data) getApplicationContext();
-                        data.setNode(node);
 
-                        startActivity(questions);
+                        SparseIntArray finishedQuestions = data.getFinishedQuestions();
+                        ArrayList<Integer>unfinishedQuestionsIds = new ArrayList<Integer>();
+                        SparseIntArray userQuestNodePks = data.getUserQuestNodePKs();
+                        System.out.println("" + finishedQuestions);
+
+                        for(int i = 0; i < node.getQuestionIDs().length; i++) {
+                            if (finishedQuestions.indexOfKey(node.getQuestionIDs()[i]) < 0) {
+
+                                unfinishedQuestionsIds.add(node.getQuestionIDs()[i]);
+                                System.out.println("" + node.getQuestionIDs()[i]);
+                            }else{
+                                data.setUserQuestNodePk(userQuestNodePks.get(node.getQuestionIDs()[i]));
+
+                                System.out.println("UserQuestNodePk: " +  userQuestNodePks.get(node.getQuestionIDs()[i]));
+                            }
+                        }
+
+                        int [] intArray = new int[unfinishedQuestionsIds.size()];
+
+                        for(int x = 0; x < unfinishedQuestionsIds.size(); x++){
+                            intArray[x] = unfinishedQuestionsIds.get(x);
+                        }
+
+                        node.setUnfinishedQuestionIDs(intArray);
+
+//                        System.out.println("Länge der Node Questions: " + node.getQuestionIDs().length + "Länge der unbeantworteten Fragen: " + unfinishedQuestionsIds.size());
+                        if((unfinishedQuestionsIds.size()) == 0){
+                            Toast.makeText(getApplicationContext(), "Sie haben bereits alle Fragen vollständig beantwortet", Toast.LENGTH_LONG).show();
+                        }else{
+
+                            data.setNode(node);
+                            startActivity(questions);
+                        }
                     }
                 }
             }
@@ -139,9 +185,6 @@ public class MainActivity extends ActionBarActivity {
 
     private class MainNodeTask extends AsyncTask<Void, Void, Void> {
     	
-    	ArrayList <Integer> nodeIds = new ArrayList<Integer>();
-        ArrayList<Integer> unfinishedQuestions = new ArrayList<Integer>();
-    	
 		@Override
         protected Void doInBackground(Void... params) {
 
@@ -151,18 +194,8 @@ public class MainActivity extends ActionBarActivity {
                 if(userQuestPk == 0){
                     userQuestPk = QuestMethods.getUserQuestPk(userPk, quest.getId());
                 }
-                ArrayList<Integer> unfinishedQuestions = new ArrayList<Integer>();
-                SparseIntArray finishedQuestions = data.getFinishedQuestions();
-                System.out.println("" + userQuestPk);
-                ArrayList <Integer> nodeIds = QuestMethods.getFinishedNodes(userQuestPk, getApplicationContext());
 
-                for (int i = 0; i< nodeIds.size(); i++){
-                    if(finishedQuestions.indexOfKey(nodeIds.get(i)) < 0){
-                        unfinishedQuestions.add(nodeIds.get(i));
-                    }
-                }
-
-                System.out.println("" + nodeIds);
+                nodeIds = QuestMethods.getFinishedNodes(userQuestPk, getApplicationContext());
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -183,13 +216,41 @@ public class MainActivity extends ActionBarActivity {
 
             bar.setVisibility(View.INVISIBLE);
 
-            if(unfinishedQuestions == null){
-                Toast.makeText(getApplicationContext(),"Sie haben bereits alle Fragen beantwortet!", Toast.LENGTH_LONG).show();
-            }else{
-                ExpandableListViewNodes adapter = new ExpandableListViewNodes(getApplicationContext(), nodes, unfinishedQuestions);
+                ExpandableListViewNodes adapter = new ExpandableListViewNodes(getApplicationContext(), nodes, nodeIds);
                 list.setAdapter(adapter);
-            }
+
 
         }
+    }
+
+    private class UserQuestNodeTask extends AsyncTask<Integer, Void, Void>{
+
+        @Override
+        protected Void doInBackground(Integer... params) {
+            // TODO Auto-generated method stub
+
+            try {
+                String json = QuestMethods.setUserQuestNode(params[0], params[1]);
+
+                JSONObject obj = new JSONObject(json);
+
+                int userQuestNodePk = obj.getInt("id");
+
+                Data data = (Data) getApplicationContext();
+
+                data.setUserQuestNodePk(userQuestNodePk);
+
+
+            } catch (JSONException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
     }
 }
