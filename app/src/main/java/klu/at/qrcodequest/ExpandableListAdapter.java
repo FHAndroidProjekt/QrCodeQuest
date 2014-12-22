@@ -1,11 +1,15 @@
 package klu.at.qrcodequest;
 
+import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.nfc.NfcAdapter;
 import android.os.AsyncTask;
-import android.util.SparseBooleanArray;
+import android.os.Build;
+import android.support.v7.widget.Toolbar;
+import android.transition.Explode;
 import android.util.SparseIntArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,10 +19,6 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-import klu.at.qrcodequest.activities.BestlistActivity;
-import klu.at.qrcodequest.activities.GoogleMapsActivity;
-import klu.at.qrcodequest.activities.MainActivity;
-import klu.at.qrcodequest.activities.NFCActivity;
 
 import org.json.JSONException;
 
@@ -26,18 +26,25 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import klu.at.qrcodequest.activities.BestlistActivity;
+import klu.at.qrcodequest.activities.GoogleMapsActivity;
+import klu.at.qrcodequest.activities.MainActivity;
+import klu.at.qrcodequest.activities.NFCActivity;
+
 public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
 	private Context context;
-	private Intent intent;
+    private Activity activity;
+    private Intent intent;
 	private List<String> listParents;
 	private List<Quest> quests;
 	private SparseIntArray userQuestMap;
 	private int userPk;
 	
-	public ExpandableListAdapter(Context context, List<String> listParents, ArrayList<Quest> quests, SparseIntArray userQuestMap, int userPk) {
+	public ExpandableListAdapter(Context context, List<String> listParents, ArrayList<Quest> quests, SparseIntArray userQuestMap, int userPk, Activity activity) {
 		this.context = context;
-		this.listParents = listParents;
+        this.activity = activity;
+        this.listParents = listParents;
 		this.quests = quests;
 		this.userQuestMap = userQuestMap;
 		this.userPk = userPk;
@@ -177,8 +184,19 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 				intent = new Intent(context, BestlistActivity.class);
 				intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); 
 				intent.putExtra("questPk", quests.get((int)getGroupId(id)).getId());
-				context.startActivity(intent);
-				
+//				context.startActivity(intent);
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    // Call some material design APIs here
+                    System.out.println("ok");
+                    Toolbar toolbar = (Toolbar) activity.findViewById(R.id.myToolbar);
+                    activity.getWindow().setExitTransition(new Explode());
+                    activity.startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(activity, toolbar, "toolbarTransition").toBundle());
+                } else {
+                    // Implement this feature without material design
+                    activity.startActivity(intent);
+                    activity.overridePendingTransition(R.anim.slide_in_right, R.anim.fade_out);
+                }
 			}
 		});
 	
