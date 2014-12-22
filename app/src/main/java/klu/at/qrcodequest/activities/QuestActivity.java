@@ -32,7 +32,6 @@ public class QuestActivity extends ActionBarActivity /*implements OnItemClickLis
     private int finished = 0;
     private User user;
     private int userId;
-    private Data data;
     private SparseIntArray userQuestMap = new SparseIntArray();
 
 
@@ -41,7 +40,7 @@ public class QuestActivity extends ActionBarActivity /*implements OnItemClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quest);
 
-        data = (Data) getApplicationContext();
+        Data data = (Data) getApplicationContext();
 
         if (savedInstanceState != null){
             userId = savedInstanceState.getInt("userId");
@@ -110,7 +109,6 @@ public class QuestActivity extends ActionBarActivity /*implements OnItemClickLis
     private void getUserQuests() {
 
         for (final Quest quest : quests) {
-            System.out.println("" + quest.getId());
             String url = ("http://193.171.127.102:8080/Quest/userQuest/get?userPk=" + userId + "&questPk=" + quest.getId());
 
             JsonArrayRequest jsObjRequest = new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
@@ -121,6 +119,7 @@ public class QuestActivity extends ActionBarActivity /*implements OnItemClickLis
 						if(response.length() != 0){
 							for (int i = 0; i < response.length(); i++){
 								id = response.getJSONObject(i).getInt("id");
+								System.out.println("" + id);
 								userQuestMap.put(quest.getId(), id);
 							}
 						}
@@ -135,7 +134,6 @@ public class QuestActivity extends ActionBarActivity /*implements OnItemClickLis
                     finished++;
                     if (finished == quests.size()) { // Wenn alle Requests abgearbeitet sind
                         drawList();
-
                     }
                 }
             }, new com.android.volley.Response.ErrorListener() {
@@ -157,7 +155,7 @@ public class QuestActivity extends ActionBarActivity /*implements OnItemClickLis
             values.add(quest.getName()); //speichert die Namen der Quest in die ArrayList
         }
 
-        ExpandableListAdapter adapter = new ExpandableListAdapter(data, getApplicationContext(), values, quests, userQuestMap, userId);
+        ExpandableListAdapter adapter = new ExpandableListAdapter(getApplicationContext(), values, quests, userQuestMap, userId);
         list.setAdapter(adapter);
 
         bar.setVisibility(View.INVISIBLE);

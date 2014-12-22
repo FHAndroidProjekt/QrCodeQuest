@@ -34,15 +34,13 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 	private List<Quest> quests;
 	private SparseIntArray userQuestMap;
 	private int userPk;
-    private Data data;
 	
-	public ExpandableListAdapter(Data data, Context context, List<String> listParents, ArrayList<Quest> quests, SparseIntArray userQuestMap, int userPk) {
+	public ExpandableListAdapter(Context context, List<String> listParents, ArrayList<Quest> quests, SparseIntArray userQuestMap, int userPk) {
 		this.context = context;
 		this.listParents = listParents;
 		this.quests = quests;
 		this.userQuestMap = userQuestMap;
 		this.userPk = userPk;
-        this.data = data;
 	}
 	
 	@Override
@@ -89,9 +87,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 			LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			convertView = inflater.inflate(R.layout.list_group, parent, false);	
 			;
-            System.out.println("" + userQuestMap.get(21));
-            System.out.println("" + userQuestMap.indexOfKey(quests.get((int) getGroupId(groupPosition)).getId()));
-			if(userQuestMap.indexOfKey(quests.get((int) getGroupId(groupPosition)).getId()) >= 0 ){
+			if(userQuestMap.indexOfKey(quests.get((int) getGroupId(groupPosition)).getId()) > 0 ){
 				convertView.setBackgroundColor(Color.parseColor("#70FF0000"));
 			}
 		
@@ -110,18 +106,18 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 			LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			convertView = inflater.inflate(R.layout.list_child, parent, false);
 			
-			if(userQuestMap.indexOfKey(quests.get((int) getGroupId(groupPosition)).getId()) >= 0){
+			if(userQuestMap.indexOfKey(quests.get((int) getGroupId(groupPosition)).getId()) > 0){
 				convertView.setBackgroundColor(Color.parseColor("#55FF0000"));
 			}
 			holder = new UserHolder2();
 			holder.anmelden = (Button) convertView.findViewById(R.id.sign);
 			holder.bestenliste = (Button)convertView.findViewById(R.id.best);
 			
-			if(userQuestMap.indexOfKey(quests.get((int) getGroupId(groupPosition)).getId()) >= 0){
+			if(userQuestMap.indexOfKey(quests.get((int) getGroupId(groupPosition)).getId()) > 0){
 				System.out.println("" + userQuestMap.get(quests.get((int)getGroupId(groupPosition)).getId()));
 				holder.anmelden.setText("Fortsetzen");
 				
-			}else if(userQuestMap.indexOfKey(quests.get((int) getGroupId(groupPosition)).getId()) >= 0){
+			}else if(userQuestMap.indexOfKey(quests.get((int) getGroupId(groupPosition)).getId()) > 0){
 
 				holder.anmelden.setText("Anmelden");
 			}
@@ -206,14 +202,6 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 		protected Void doInBackground(Integer... params) {
 			try {
 				QuestMethods.setUserQuest(userPk, quests.get((int)getGroupId(params[0])).getId());
-
-//                int userQuestPk = QuestMethods.getUserQuestPk(userPk, quests.get((int)getGroupId(params[0])).getId());
-
-
-//                System.out.println("" + userQuestPk);
-//
-//                data.setUserQuestPk(userQuestPk);
-
 			} catch (JSONException | IOException e) {
 				e.printStackTrace();
 			}
