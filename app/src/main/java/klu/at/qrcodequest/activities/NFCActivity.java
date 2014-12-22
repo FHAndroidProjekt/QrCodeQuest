@@ -89,7 +89,8 @@ public class NFCActivity extends ActionBarActivity {
             userId = data.getUser().getId();
             userQuestPk = data.getUserQuestPk();
         }
-		
+
+
 		AppDown.register(this); // Methode für das Beenden der Applikation
 		
 		list = (ExpandableListView) findViewById(R.id.listView1);
