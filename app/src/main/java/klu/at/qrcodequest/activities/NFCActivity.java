@@ -51,7 +51,6 @@ public class NFCActivity extends ActionBarActivity {
 	private int dtRegistration = 3; //NFC_dtRegistration = 3
 	private Node[] nodes;
 	private Node node;
-	private ArrayList<Node> answeredNodesList;
 	private String errorString="";
     private int userId;
     private int questId;
@@ -149,7 +148,7 @@ public class NFCActivity extends ActionBarActivity {
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
 		builder.setTitle("Einstellungen");
-		builder.setMessage("NFC is not enabled. Please go to the wireless settings to enable it");
+		builder.setMessage("NFC ist ausgeschaltet. Bitte gehe zu den Einstellungen.");
 
 		builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 
@@ -203,11 +202,9 @@ public class NFCActivity extends ActionBarActivity {
 		if(nfcAdapter != null){
 			nfcAdapter.disableForegroundDispatch(this);
 		}
-		
 	}
 	
 	private void handleIntent(Intent intent) {
-		System.out.println("Hier");
 		String action = intent.getAction();
 		if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(action)) {
 
@@ -247,7 +244,7 @@ public class NFCActivity extends ActionBarActivity {
 			Ndef ndef = Ndef.get(tag);
 			if (ndef == null) {
 				// NDEF is not supported by this Tag.
-				System.out.println("Fehler");
+				Toast.makeText(context, "Der NFC-Tag konnte leider nicht gelesenw werden", Toast.LENGTH_SHORT).show();
 				return null;
 			}
 

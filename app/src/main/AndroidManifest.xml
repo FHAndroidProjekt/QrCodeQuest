@@ -4,23 +4,23 @@
 
     <permission
         android:name="at.klu.example.permission.MAPS_RECEIVE"
-        android:protectionLevel="signature"/>
+        android:protectionLevel="signature" />
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-permission android:name="android.permission.FLASHLIGHT"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"/>
-    <uses-permission android:name="android.permission.NFC"/>
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+    <uses-permission android:name="android.permission.NFC" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+
     <uses-feature
         android:glEsVersion="0x00020000"
-        android:required="true"/>
-
+        android:required="true" />
 
     <application
         android:name=".Data"
@@ -28,69 +28,67 @@
         android:icon="@drawable/icon1"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-
-        <meta-data android:name="com.google.android.gms.version"
+        <meta-data
+            android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyAKu6biWKYnpe69hSa12_1qxZpHwS_nQyI"/>
+            android:value="AIzaSyAKu6biWKYnpe69hSa12_1qxZpHwS_nQyI" />
 
         <activity
-            android:name="klu.at.qrcodequest.activities.MainActivity"
+            android:name=".activities.MainActivity"
             android:configChanges="orientation"
             android:label="@string/app_name"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="klu.at.qrcodequest.activities.QuestionsActivity"
+            android:name=".activities.QuestionsActivity"
             android:configChanges="orientation"
             android:label="@string/app_name"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="klu.at.qrcodequest.activities.BestlistActivity"
+            android:name=".activities.BestlistActivity"
             android:configChanges="orientation"
             android:label="@string/title_activity_bestlist"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="klu.at.qrcodequest.activities.RegistrationActivity"
+            android:name=".activities.RegistrationActivity"
             android:configChanges="orientation"
             android:label="@string/title_activity_quest"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="klu.at.qrcodequest.activities.QuestActivity"
+            android:name=".activities.QuestActivity"
             android:configChanges="orientation"
             android:label="@string/title_activity_quest"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="klu.at.qrcodequest.activities.StartActivity"
+            android:name=".activities.StartActivity"
             android:configChanges="orientation"
             android:label="@string/title_activity_start"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
             <intent-filter>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
 
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
         <activity
-            android:name="klu.at.qrcodequest.activities.NFCActivity"
+            android:name=".activities.NFCActivity"
             android:configChanges="orientation"
             android:label="@string/title_activity_nfc"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="klu.at.qrcodequest.activities.GoogleMapsActivity"
-            android:label="@string/title_activity_google_maps"
+            android:name=".activities.GoogleMapsActivity"
             android:configChanges="orientation"
-            android:screenOrientation="portrait"
-            >
+            android:label="@string/title_activity_google_maps"
+            android:screenOrientation="portrait" >
         </activity>
-        <activity
-            android:name="com.google.zxing.client.android.CaptureActivity">
+        <activity android:name="com.google.zxing.client.android.CaptureActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -102,7 +100,10 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
+        <activity
+            android:name=".activities.IdentificationActivity"
+            android:label="@string/title_activity_identification" >
+        </activity>
     </application>
 
 </manifest>

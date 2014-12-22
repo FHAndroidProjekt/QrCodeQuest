@@ -27,7 +27,10 @@ import android.widget.Toast;
 public class GoogleMapsActivity extends ActionBarActivity implements OnMyLocationChangeListener {
 
 	private GoogleMap map;
-	private int questPk;
+    private int userId;
+    private int questId;
+    private int userQuestPk;
+    Data data;
 	private int dtRegistration = 4;
 	private int userPk;
 	private Node[] nodes;
@@ -38,7 +41,6 @@ public class GoogleMapsActivity extends ActionBarActivity implements OnMyLocatio
 	private double latitude;
 	private double longitude;
 	private double accuracy;
-	private Data data;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -48,8 +50,9 @@ public class GoogleMapsActivity extends ActionBarActivity implements OnMyLocatio
 		AppDown.register(this);
 
 		data = (Data) getApplicationContext();
-		questPk = data.getQuest().getId();
+		questId = data.getQuest().getId();
 		userPk = data.getUser().getId();
+        userQuestPk = data.getUserQuestPk();
 		
 		//GoogleMaps
         map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
@@ -150,7 +153,9 @@ public class GoogleMapsActivity extends ActionBarActivity implements OnMyLocatio
 		@Override
 		protected Void doInBackground(Void... params) {
             try {
-                nodes = QuestMethods.getNodes(questPk);
+                nodes = QuestMethods.getNodes(questId);
+
+
             } catch (JSONException e) {
                 e.printStackTrace();
             } catch (IOException e) {
