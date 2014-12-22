@@ -214,6 +214,7 @@ public class MainActivity extends ActionBarActivity {
         protected void onPostExecute(Void result) {
             HTTPHelper.HTTPExceptionHandler(errorString, MainActivity.this);
 
+            
             bar.setVisibility(View.INVISIBLE);
 
                 ExpandableListViewNodes adapter = new ExpandableListViewNodes(getApplicationContext(), nodes, nodeIds);
