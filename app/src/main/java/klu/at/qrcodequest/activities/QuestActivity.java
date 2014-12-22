@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.SparseBooleanArray;
 import android.util.SparseIntArray;
 import android.view.View;
@@ -39,6 +40,10 @@ public class QuestActivity extends ActionBarActivity /*implements OnItemClickLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quest);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.myToolbar);
+        toolbar.setTitle("Quests");
+        setSupportActionBar(toolbar);
 
         Data data = (Data) getApplicationContext();
 
@@ -155,7 +160,7 @@ public class QuestActivity extends ActionBarActivity /*implements OnItemClickLis
             values.add(quest.getName()); //speichert die Namen der Quest in die ArrayList
         }
 
-        ExpandableListAdapter adapter = new ExpandableListAdapter(getApplicationContext(), values, quests, userQuestMap, userId);
+        ExpandableListAdapter adapter = new ExpandableListAdapter(getApplicationContext(), values, quests, userQuestMap, userId, this);
         list.setAdapter(adapter);
 
         bar.setVisibility(View.INVISIBLE);
@@ -179,26 +184,6 @@ public class QuestActivity extends ActionBarActivity /*implements OnItemClickLis
 
 //			Toast.makeText(getApplicationContext(), "" + position + " " + itemValue, Toast.LENGTH_LONG).show();
 //    }
-
-    @Override
-    public void onBackPressed() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
-        builder.setTitle("Programm beenden");
-        builder.setMessage("Wollen sie das Programm wirklich beenden?");
-
-        builder.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
-
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                AppDown.allDown();
-
-            }
-        });
-        builder.setNegativeButton("Nein", null);
-        AlertDialog dialog = builder.create();
-        dialog.show();
-    }
 
     @Override
     protected void onSaveInstanceState(Bundle savedInstanceState) {

@@ -1,29 +1,38 @@
 package klu.at.qrcodequest.activities;
 
-import android.app.Activity;
+import android.animation.Animator;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.widget.Toolbar;
+import android.transition.Explode;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewAnimationUtils;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import klu.at.qrcodequest.*;
+
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.google.gson.Gson;
+
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-public class StartActivity extends ActionBarActivity implements OnClickListener {
+import klu.at.qrcodequest.AppDown;
+import klu.at.qrcodequest.Data;
+import klu.at.qrcodequest.R;
+import klu.at.qrcodequest.User;
+import klu.at.qrcodequest.VolleySingleton;
+
+public class StartActivity extends ActionBarActivity {
 
     private Intent intent;
     private Button start;
@@ -38,25 +47,22 @@ public class StartActivity extends ActionBarActivity implements OnClickListener 
 		setContentView(R.layout.activity_start);
 		AppDown.register(this);
 
+        ProgressBar progressBar = (ProgressBar) findViewById(R.id.marker_progress);
+//        int cx = (progressBar.getLeft() + progressBar.getRight()) / 2;
+//        int cy = (progressBar.getTop() + progressBar.getBottom()) / 2;
+//
+//        int finalRadius = Math.max(progressBar.getWidth(), progressBar.getHeight());
+//        Animator anim = ViewAnimationUtils.createCircularReveal(progressBar, cx, cy, 0, finalRadius);
+
+
 //        Toolbar toolbar = findViewById()
 
-        start = (Button) findViewById(R.id.button1);
-        start.setOnClickListener(this);
-        start.setClickable(false);
         TextView willkommen = (TextView) findViewById(R.id.textViewWillkommen);
         typeface = Typeface.createFromAsset(getAssets(), "fonts/TYPOGRAPH PRO Light.ttf");
         willkommen.setTypeface(typeface);
 
         getUser();
     }
-
-
-	@Override
-	public void onClick(View v) {
-		
-		startActivity(intent);
-		
-	}
 	
 	private String sha1(String s) {
         MessageDigest md = null;
@@ -88,7 +94,7 @@ public class StartActivity extends ActionBarActivity implements OnClickListener 
                     if (response.toString().equals("[]")) {
                         intent = new Intent(getApplicationContext(), RegistrationActivity.class);
                         intent.putExtra("userID", userID);
-                        start.setClickable(true);
+                        startTimer();
                     } else {
                         Gson gson = new Gson();
                         User user = gson.fromJson(response.getJSONObject(0).toString(), User.class);
@@ -98,7 +104,6 @@ public class StartActivity extends ActionBarActivity implements OnClickListener 
 
                         // Wenn User existiert keine Registrierung
                         intent = new Intent(getApplicationContext(), QuestActivity.class);
-                        start.setClickable(true);
 
                         TextView welcomeUser = (TextView) findViewById(R.id.textViewUser);
                         welcomeUser.setTypeface(typeface);
@@ -107,6 +112,8 @@ public class StartActivity extends ActionBarActivity implements OnClickListener 
                         } else {
                             welcomeUser.setText("zurück " + user.getFirstname() + "!");
                         }
+
+                        startTimer();
                     }
                     ProgressBar progressBar = (ProgressBar) findViewById(R.id.marker_progress);
                     progressBar.setVisibility(View.INVISIBLE);
@@ -122,5 +129,28 @@ public class StartActivity extends ActionBarActivity implements OnClickListener 
             }
         });
         VolleySingleton.getInstance(this.getApplicationContext()).addToRequestQueue(jsonArrayRequest);
+    }
+
+    private void startTimer() {
+        int SPLASH_TIME_OUT = 2500;
+        new Handler().postDelayed(new Runnable() {
+
+            /*
+             * Showing splash screen with a timer. This will be useful when you
+             * want to show case your app logo / company
+             */
+
+            @Override
+            public void run() {
+                // This method will be executed once the timer is over
+                // Start your app main activity
+
+                startActivity(intent);
+                overridePendingTransition(R.anim.fade_in, R.anim.abc_fade_out);
+
+                // close this activity
+                finish();
+            }
+        }, SPLASH_TIME_OUT);
     }
 }
