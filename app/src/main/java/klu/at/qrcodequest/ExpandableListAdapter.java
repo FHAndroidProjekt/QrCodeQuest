@@ -87,7 +87,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 			LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			convertView = inflater.inflate(R.layout.list_group, parent, false);	
 			;
-			if(userQuestMap.indexOfKey(quests.get((int) getGroupId(groupPosition)).getId()) > 0 ){
+			if(userQuestMap.indexOfKey(quests.get((int) getGroupId(groupPosition)).getId()) >= 0 ){
 				convertView.setBackgroundColor(Color.parseColor("#70FF0000"));
 			}
 		
@@ -106,18 +106,18 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 			LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			convertView = inflater.inflate(R.layout.list_child, parent, false);
 			
-			if(userQuestMap.indexOfKey(quests.get((int) getGroupId(groupPosition)).getId()) > 0){
+			if(userQuestMap.indexOfKey(quests.get((int) getGroupId(groupPosition)).getId()) >= 0){
 				convertView.setBackgroundColor(Color.parseColor("#55FF0000"));
 			}
 			holder = new UserHolder2();
 			holder.anmelden = (Button) convertView.findViewById(R.id.sign);
 			holder.bestenliste = (Button)convertView.findViewById(R.id.best);
 			
-			if(userQuestMap.indexOfKey(quests.get((int) getGroupId(groupPosition)).getId()) > 0){
+			if(userQuestMap.indexOfKey(quests.get((int) getGroupId(groupPosition)).getId()) >= 0){
 				System.out.println("" + userQuestMap.get(quests.get((int)getGroupId(groupPosition)).getId()));
 				holder.anmelden.setText("Fortsetzen");
 				
-			}else if(userQuestMap.indexOfKey(quests.get((int) getGroupId(groupPosition)).getId()) > 0){
+			}else if(userQuestMap.indexOfKey(quests.get((int) getGroupId(groupPosition)).getId()) >= 0){
 
 				holder.anmelden.setText("Anmelden");
 			}
