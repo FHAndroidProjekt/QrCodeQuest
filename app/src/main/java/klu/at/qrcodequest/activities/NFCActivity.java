@@ -388,6 +388,12 @@ public class NFCActivity extends ActionBarActivity {
             try {
                 nodes = QuestMethods.getNodes(questId);
 
+                if(userQuestPk == 0){
+                    userQuestPk = QuestMethods.getUserQuestPk(userId, questId);
+                    System.out.println("Das ist die UserQuestPk" + userQuestPk);
+
+                    data.setUserQuestPk(userQuestPk);
+                }
                 nodeIds = QuestMethods.getFinishedNodes(userQuestPk, getApplicationContext());
 
 

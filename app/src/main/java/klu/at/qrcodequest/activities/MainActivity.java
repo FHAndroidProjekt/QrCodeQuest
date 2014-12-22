@@ -193,6 +193,9 @@ public class MainActivity extends ActionBarActivity {
 
                 if(userQuestPk == 0){
                     userQuestPk = QuestMethods.getUserQuestPk(userPk, quest.getId());
+                    System.out.println("Das ist die UserQuestPk" + userQuestPk);
+
+                    data.setUserQuestPk(userQuestPk);
                 }
 
                 nodeIds = QuestMethods.getFinishedNodes(userQuestPk, getApplicationContext());
@@ -214,7 +217,7 @@ public class MainActivity extends ActionBarActivity {
         protected void onPostExecute(Void result) {
             HTTPHelper.HTTPExceptionHandler(errorString, MainActivity.this);
 
-            
+
             bar.setVisibility(View.INVISIBLE);
 
                 ExpandableListViewNodes adapter = new ExpandableListViewNodes(getApplicationContext(), nodes, nodeIds);
