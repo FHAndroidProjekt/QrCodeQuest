@@ -171,13 +171,6 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 					intent = new Intent(context, IdentificationActivity.class);
 					
 				}
-            if(quests.get((int)getGroupId(id)).getDtRegistration() == 3) {
-                NfcAdapter nfcAdapter = NfcAdapter.getDefaultAdapter(v.getContext());
-                if (nfcAdapter == null) {
-                    Toast.makeText(v.getContext(), "Auf diesem Gerät wird leider kein NFC unterstützt.", Toast.LENGTH_LONG).show();
-                    return;
-                }
-            }
 				intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); //dadurch kann eine neue Activity außerhalb einer Activity gestartet werden
 				context.startActivity(intent);
 				
