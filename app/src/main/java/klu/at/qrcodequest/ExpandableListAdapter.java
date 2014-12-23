@@ -28,6 +28,7 @@ import java.util.List;
 
 import klu.at.qrcodequest.activities.BestlistActivity;
 import klu.at.qrcodequest.activities.GoogleMapsActivity;
+import klu.at.qrcodequest.activities.IdentificationActivity;
 import klu.at.qrcodequest.activities.MainActivity;
 import klu.at.qrcodequest.activities.NFCActivity;
 
@@ -150,7 +151,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 					}else{
 						data.setUserQuestPk(userQuestMap.get(quests.get((int) getGroupId(groupPosition)).getId()));
 					}
-					intent = new Intent(context,MainActivity.class);
+					intent = new Intent(context,IdentificationActivity.class);
 				}else if(quests.get((int)getGroupId(id)).getDtRegistration() == 3){
 					NfcAdapter nfcAdapter = NfcAdapter.getDefaultAdapter(v.getContext());
 					if (nfcAdapter == null) {
@@ -162,14 +163,27 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 					}else{
 						data.setUserQuestPk(userQuestMap.get(quests.get((int) getGroupId(groupPosition)).getId()));
 					}
-					intent = new Intent(context,NFCActivity.class);
+					intent = new Intent(context,IdentificationActivity.class);
 				}else if(quests.get((int)getGroupId(id)).getDtRegistration() == 4){
 					if(userQuestMap.indexOfKey(quests.get((int) getGroupId(groupPosition)).getId()) < 0){
 						new UserQuestTask().execute(groupPosition);
 					}
-					intent = new Intent(context, GoogleMapsActivity.class);
+					intent = new Intent(context, IdentificationActivity.class);
 					
 				}
+            if(quests.get((int)getGroupId(id)).getDtRegistration() == 3) {
+                NfcAdapter nfcAdapter = NfcAdapter.getDefaultAdapter(v.getContext());
+                if (nfcAdapter == null) {
+                    Toast.makeText(v.getContext(), "Auf diesem Gerät wird leider kein NFC unterstützt.", Toast.LENGTH_LONG).show();
+                    return;
+                }
+            }
+                if(userQuestMap.indexOfKey(quests.get((int) getGroupId(groupPosition)).getId()) < 0){
+                    new UserQuestTask().execute(groupPosition);
+                }else{
+                    data.setUserQuestPk(userQuestMap.get(quests.get((int) getGroupId(groupPosition)).getId()));
+                }
+                intent = new Intent(context, IdentificationActivity.class);
 				intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); //dadurch kann eine neue Activity außerhalb einer Activity gestartet werden
 				context.startActivity(intent);
 				
