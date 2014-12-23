@@ -15,11 +15,13 @@ public class ExpandableListViewNodes extends BaseExpandableListAdapter{
 	private Node[] nodes;
 	private Context context;
 	private ArrayList <Integer> nodeIds;
+    private ArrayList<Integer> finishedNodeIds;
 	
-	public ExpandableListViewNodes(Context context, Node[] nodes, ArrayList<Integer>nodeIds) {
+	public ExpandableListViewNodes(Context context, Node[] nodes, ArrayList<Integer>nodeIds, ArrayList<Integer>finishedNodeIds) {
 		this.nodes = nodes;
 		this.context = context;
 		this.nodeIds = nodeIds;
+        this.finishedNodeIds = finishedNodeIds;
 	}
 	
 
@@ -72,9 +74,13 @@ public class ExpandableListViewNodes extends BaseExpandableListAdapter{
 		for (int x = 0; x < nodeIds.size(); x++){
 			if (nodes[(int)getGroupId(groupPosition)].getId() == nodeIds.get(x)){
 				convertView.setBackgroundColor(Color.parseColor("#70FF0000"));
+		    }
 		}
-			
-		}
+        for(int i = 0; i< finishedNodeIds.size(); i++){
+            if (nodes[(int)getGroupId(groupPosition)].getId() == finishedNodeIds.get(i)){
+                convertView.setBackgroundColor(Color.parseColor("#900000FF"));
+            }
+        }
 		
 		TextView textView = (TextView) convertView.findViewById(R.id.textView1);
 		textView.setText(nodeName);

@@ -128,7 +128,7 @@ public class GoogleMapsActivity extends ActionBarActivity implements OnMyLocatio
 		
 		double d;
 		
-		if(nodes != null && accuracy <=20){
+		if(nodes != null && accuracy <=200){
 			for (Node node : nodes) {
 
 				double dx = 71.5 * (latitude - Double.parseDouble(node.getRegistrationTarget1()));
@@ -136,7 +136,7 @@ public class GoogleMapsActivity extends ActionBarActivity implements OnMyLocatio
 
 				d = Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2)) * 1000;
 
-				if (d <= 5) {
+				if (d <= 100) {
 					Intent questions = new Intent(getApplicationContext(), QuestionsActivity.class);
 					data.setNode(node);
 					startActivity(questions);

@@ -34,6 +34,7 @@ public class MainActivity extends ActionBarActivity {
     private int userQuestPk;
     private int userPk;
     private Data data;
+    private Node node;
     private ExpandableListView list;
     ArrayList<Integer> nodeIds = new ArrayList<Integer>();
 
@@ -220,9 +221,9 @@ public class MainActivity extends ActionBarActivity {
 
             bar.setVisibility(View.INVISIBLE);
 
-                ExpandableListViewNodes adapter = new ExpandableListViewNodes(getApplicationContext(), nodes, nodeIds);
-                list.setAdapter(adapter);
-
+//                ExpandableListViewNodes adapter = new ExpandableListViewNodes(getApplicationContext(), nodes, nodeIds, );
+//                list.setAdapter(adapter);
+//
 
         }
     }

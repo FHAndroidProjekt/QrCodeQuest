@@ -72,6 +72,7 @@ public class IdentificationActivity extends ActionBarActivity implements OnMyLoc
     private int userQuestId;
     private int dtRegistration;
     private ArrayList<Integer> nodeIds = new ArrayList<Integer>();
+    private ArrayList<Integer> finishedNodeIds = new ArrayList<Integer>();
 
     //Variablen spezifisch für NFC
     public final String MIME_TEXT_PLAIN = "text/plain";
@@ -177,8 +178,6 @@ public class IdentificationActivity extends ActionBarActivity implements OnMyLoc
             Toast.makeText(getApplicationContext(), "Die Karte konnte nicht erstellt werden", Toast.LENGTH_LONG).show();
         } else {
             map.setMyLocationEnabled(true);
-
-            abfrage();
         }
         map.getUiSettings().setCompassEnabled(false);
         map.setOnMyLocationChangeListener(this);
@@ -270,7 +269,7 @@ public class IdentificationActivity extends ActionBarActivity implements OnMyLoc
 
                 for (final Node node : nodes) {
                     if (node.getRegistrationTarget1()!= null && node.getRegistrationTarget1().equals(result)) {
-                        returnFinishedQuestions(node);
+                        returnUnfinishedQuestions(node);
                     }
                 }
             }
@@ -409,7 +408,7 @@ public class IdentificationActivity extends ActionBarActivity implements OnMyLoc
                 for (Node node : nodes) {
                     if (node.getRegistrationTarget1() != null && node.getRegistrationTarget1().equals(result.getContents())) {
 
-                        returnFinishedQuestions(node);
+                        returnUnfinishedQuestions(node);
                     }
                 }
             }
@@ -440,7 +439,7 @@ public class IdentificationActivity extends ActionBarActivity implements OnMyLoc
 
                 if (d <= 100) {
 
-                   returnFinishedQuestions(node);
+                   returnUnfinishedQuestions(node);
                 }
                 Toast.makeText(getApplicationContext(), "" + d, Toast.LENGTH_SHORT).show();
 
@@ -527,6 +526,7 @@ public class IdentificationActivity extends ActionBarActivity implements OnMyLoc
                 nodeIds = QuestMethods.getFinishedNodes(userQuestId, getApplicationContext());
 
 
+
             } catch (JSONException e) {
                 e.printStackTrace();
             } catch (IOException e) {
@@ -543,10 +543,12 @@ public class IdentificationActivity extends ActionBarActivity implements OnMyLoc
         @Override
         protected void onPostExecute(Void result) {
             HTTPHelper.HTTPExceptionHandler(errorString, IdentificationActivity.this);
+            finishedNodeIds = getFinishedNodes(nodes);
+            System.out.println("Fertige Nodes!!!!!!!!" + finishedNodeIds);
 
             if(dtRegistration == 2 || dtRegistration == 3){
                 bar.setVisibility(View.INVISIBLE);
-                adapter = new ExpandableListViewNodes(getApplicationContext(), nodes, nodeIds);
+                adapter = new ExpandableListViewNodes(getApplicationContext(), nodes, nodeIds, finishedNodeIds);
                 list.setAdapter(adapter);
             }
             if(dtRegistration == 4){
@@ -564,7 +566,7 @@ public class IdentificationActivity extends ActionBarActivity implements OnMyLoc
     //Übergibt der Question-Acitivity nur jene Fragen, die noch nicht beantwortet wurden.
     //Sind alle Fragen beantwortet, wird der Benutzer durch eine Toast-Message darauf hingewiesen.
     //Existiert noch kein Eintrag (UserQuestNode), wird dieser angelegt.
-    private void returnFinishedQuestions(Node node){
+    private void returnUnfinishedQuestions(Node node){
 
         int userQuestPk = (int)data.getUserQuestPk();
 
@@ -647,8 +649,8 @@ public class IdentificationActivity extends ActionBarActivity implements OnMyLoc
         if(dtRegistration == 3){
             nfcAdapter.enableForegroundDispatch(this, mPendingIntent, intentFilter, mNFCTechLists);
         }
-
     }
+
 
 //    @Override
 //       protected void onRestart(){
@@ -661,6 +663,30 @@ public class IdentificationActivity extends ActionBarActivity implements OnMyLoc
 //
 //    }
 
+    private ArrayList<Integer> getFinishedNodes(Node [] nodes){
+
+        Data data = (Data)getApplicationContext();
+
+        SparseIntArray finishedQuestions = data.getFinishedQuestions();
+        ArrayList<Integer> finishedNodeIds = new ArrayList<Integer>();
+
+        for(Node node: nodes){
+
+            ArrayList<Integer>unfinishedQuestionsIds = new ArrayList<Integer>();
+
+            for(int i = 0; i < node.getQuestionIDs().length; i++) {
+                if (finishedQuestions.indexOfKey(node.getQuestionIDs()[i]) < 0) {
+                    unfinishedQuestionsIds.add(node.getQuestionIDs()[i]);
+                }
+            }
+            if(unfinishedQuestionsIds.size() == 0){
+                finishedNodeIds.add(node.getId());
+            }
+            System.out.println("unfinishedQuestionsCount1" + unfinishedQuestionsIds.size());
+        }
+        return finishedNodeIds;
+
+    }
 
 }
 

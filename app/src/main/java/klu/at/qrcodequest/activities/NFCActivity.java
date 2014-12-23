@@ -418,8 +418,8 @@ public class NFCActivity extends ActionBarActivity {
 //            if(unfinishedQuestions == null){
 //                Toast.makeText(getApplicationContext(),"Sie haben bereits alle Fragen beantwortet!", Toast.LENGTH_LONG).show();
 //            }else{
-                adapter = new ExpandableListViewNodes(getApplicationContext(), nodes, nodeIds);
-                list.setAdapter(adapter);
+//                adapter = new ExpandableListViewNodes(getApplicationContext(), nodes, nodeIds);
+//                list.setAdapter(adapter);
 //            }
 
         }
