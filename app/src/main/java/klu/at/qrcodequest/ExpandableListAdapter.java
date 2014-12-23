@@ -178,12 +178,6 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                     return;
                 }
             }
-                if(userQuestMap.indexOfKey(quests.get((int) getGroupId(groupPosition)).getId()) < 0){
-                    new UserQuestTask().execute(groupPosition);
-                }else{
-                    data.setUserQuestPk(userQuestMap.get(quests.get((int) getGroupId(groupPosition)).getId()));
-                }
-                intent = new Intent(context, IdentificationActivity.class);
 				intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); //dadurch kann eine neue Activity außerhalb einer Activity gestartet werden
 				context.startActivity(intent);
 				

@@ -123,7 +123,7 @@ public class QuestionsActivity extends ActionBarActivity {
 //        } else {
 //        	changeActivity();
 //        }
-        Intent intent = new Intent(this, NFCActivity.class);
+        Intent intent = new Intent(this, IdentificationActivity.class);
         startActivity(intent);
     }
 
@@ -219,13 +219,7 @@ public class QuestionsActivity extends ActionBarActivity {
     }
 
     private void changeActivity() {
-        int dtRegistration = quest.getDtRegistration();
-        if(dtRegistration == 2){
-            changeActivity(MainActivity.class);
-        }else if(dtRegistration == 3){
-            changeActivity(NFCActivity.class);
-        }else if(dtRegistration == 4){
-            changeActivity(GoogleMapsActivity.class);
-        }
+
+        changeActivity(IdentificationActivity.class);
     }
 }
