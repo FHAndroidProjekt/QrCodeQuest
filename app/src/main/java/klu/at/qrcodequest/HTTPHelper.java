@@ -95,10 +95,10 @@ public class HTTPHelper {
                 activity.recreate();
             }
         });
-        builder.setNegativeButton("Beenden", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton("Abbrechen", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                AppDown.allDown();
+                activity.finish();
             }
         });
         AlertDialog dialog = builder.create();

@@ -44,8 +44,7 @@ public class StartActivity extends ActionBarActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_start);
-		AppDown.register(this);
+        setContentView(R.layout.activity_start);
 
         ProgressBar progressBar = (ProgressBar) findViewById(R.id.marker_progress);
 //        int cx = (progressBar.getLeft() + progressBar.getRight()) / 2;
@@ -54,8 +53,6 @@ public class StartActivity extends ActionBarActivity {
 //        int finalRadius = Math.max(progressBar.getWidth(), progressBar.getHeight());
 //        Animator anim = ViewAnimationUtils.createCircularReveal(progressBar, cx, cy, 0, finalRadius);
 
-
-//        Toolbar toolbar = findViewById()
 
         TextView willkommen = (TextView) findViewById(R.id.textViewWillkommen);
         typeface = Typeface.createFromAsset(getAssets(), "fonts/TYPOGRAPH PRO Light.ttf");

@@ -1,114 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" >
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/myToolbar"
+        layout="@layout/toolbar" />
 
     <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/registrieren"
-            android:textSize="25sp"
-            android:id="@+id/textView"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp"/>
+        android:id="@+id/textViewVorname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/myToolbar"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/vorname"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
     <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/vorname"
-            android:id="@+id/textView2"
-            android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="60dp"/>
-    
+        android:id="@+id/textViewNachname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textViewVorname"
+        android:layout_alignStart="@+id/textViewVorname"
+        android:layout_below="@+id/textViewVorname"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="30dp"
+        android:text="@string/nachname"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
     <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/nachname"
-            android:id="@+id/textView3" 
-            android:layout_below="@+id/textView2" 
-            android:layout_alignStart="@+id/textView2"
-            android:layout_alignLeft="@+id/textView2"
-            android:layout_marginTop="30dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginRight="10dp"/>
-    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/spitzname"
-            android:id="@+id/textView4"
-            android:layout_below="@+id/textView3"
-            android:layout_alignStart="@+id/textView3"
-            android:layout_alignLeft="@+id/textView3"
-            android:layout_marginTop="30dp"/>
+        android:id="@+id/textViewSpitzname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textViewNachname"
+        android:layout_alignStart="@+id/textViewNachname"
+        android:layout_below="@+id/textViewNachname"
+        android:layout_marginTop="30dp"
+        android:text="@string/spitzname"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
     <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/editText"
-            android:background="@drawable/textfield_style1"
-            android:singleLine="true"
-            android:inputType="textPersonName"
-            android:layout_marginTop="60dp"
-            android:layout_marginEnd="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_alignParentRight="true" android:layout_alignParentEnd="true"
-            android:layout_toEndOf="@+id/textView3"
-            android:layout_toRightOf="@+id/textView3"/>
+        android:id="@+id/editTextVorname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="16dp"
+        android:layout_toEndOf="@+id/textViewNachname"
+        android:layout_toRightOf="@+id/textViewNachname"
+        android:layout_below="@id/myToolbar"
+        android:background="@drawable/textfield_style1"
+        android:inputType="textPersonName"
+        android:singleLine="true" />
+
     <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/editText2"
-            android:background="@drawable/textfield_style1"
-            android:singleLine="true"
-            android:inputType="textPersonName"
-            android:layout_below="@+id/editText" android:layout_marginTop="24dp"
-            android:layout_alignRight="@+id/editText"
-            android:layout_alignEnd="@+id/editText"
-            android:layout_toEndOf="@+id/textView3"
-            android:layout_toRightOf="@+id/textView3"/>
+        android:id="@+id/editTextNachname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/editTextVorname"
+        android:layout_alignRight="@+id/editTextVorname"
+        android:layout_below="@+id/editTextVorname"
+        android:layout_marginTop="24dp"
+        android:layout_toEndOf="@+id/textViewNachname"
+        android:layout_toRightOf="@+id/textViewNachname"
+        android:background="@drawable/textfield_style1"
+        android:inputType="textPersonName"
+        android:singleLine="true" />
+
     <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/editText3"
-            android:background="@drawable/textfield_style1"
-            android:singleLine="true"
-            android:inputType="textNoSuggestions"
-            android:layout_below="@+id/editText2" android:layout_marginTop="26dp"
-            android:layout_alignLeft="@+id/editText"
-            android:layout_alignStart="@+id/editText" android:layout_alignRight="@+id/editText2"
-            android:layout_alignEnd="@+id/editText2"/>
+        android:id="@+id/editTextSpitzname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/editTextNachname"
+        android:layout_alignLeft="@+id/editTextVorname"
+        android:layout_alignRight="@+id/editTextNachname"
+        android:layout_alignStart="@+id/editTextVorname"
+        android:layout_below="@+id/editTextNachname"
+        android:layout_marginTop="26dp"
+        android:background="@drawable/textfield_style1"
+        android:inputType="textNoSuggestions"
+        android:singleLine="true" />
+
     <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/nameInBestenliste"
-            android:button="@drawable/checkbox_background"
-            android:id="@+id/checkBox"
-            android:layout_below="@+id/textView4"
-            android:layout_alignStart="@+id/textView4"
-            android:layout_alignLeft="@+id/textView4" 
-            android:layout_marginTop="28dp" android:checked="false"
-            android:textSize="22sp"/>
-    <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/questionbutton"
-            android:text="@string/registrieren"
-            android:textColor="#CCFFFFFF"
-            android:textSize="22sp"
-            android:id="@+id/button" android:layout_below="@+id/checkBox" android:layout_centerHorizontal="true"
-            android:layout_marginTop="40dp"
-            android:paddingLeft="40dp" android:paddingRight="40dp" android:paddingTop="20dp"
-            android:paddingBottom="20dp"/>
+        android:id="@+id/checkBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textViewSpitzname"
+        android:layout_alignStart="@+id/textViewSpitzname"
+        android:layout_below="@+id/textViewSpitzname"
+        android:layout_marginTop="28dp"
+        android:button="@drawable/checkbox_background"
+        android:text="@string/nameInBestenliste"
+        android:textSize="22sp" />
 
-    <ProgressBar android:indeterminate="true"
-                 android:layout_width="50dp" android:layout_height="50dp"
-                 android:id="@+id/marker_progress" style="?android:attr/progressBarStyle"
-                 android:layout_centerVertical="true"
-                 android:layout_centerHorizontal="true" android:visibility="invisible"/>
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/checkBox"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/questionbutton"
+        android:paddingBottom="20dp"
+        android:paddingLeft="40dp"
+        android:paddingRight="40dp"
+        android:paddingTop="20dp"
+        android:text="@string/registrieren"
+        android:textColor="#CCFFFFFF"
+        android:textSize="22sp" />
+
+    <ProgressBar
+        android:id="@+id/marker_progress"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:indeterminate="true"
+        android:visibility="invisible" />
 
 </RelativeLayout>

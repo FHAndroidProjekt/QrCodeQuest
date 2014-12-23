@@ -3,7 +3,7 @@
 
     <string name="app_name">QrCodeQuest</string>
     <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Einstellungen</string>
     <string name="title_activity_bestlist">BestlistActivity</string>
     <string name="title_activity_quest">QuestActivity</string>
     <string name="best">Bestenliste</string>
@@ -32,5 +32,6 @@
     <string name="title_activity_google_maps">GoogleMapsActivity</string>
     <string name="title_activity_maps">Map</string>
     <string name="title_activity_identification">IdentificationActivity</string>
+    <string name="title_activity_settings">SettingsActivity</string>
 
 </resources>

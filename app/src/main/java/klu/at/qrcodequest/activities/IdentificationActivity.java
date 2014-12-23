@@ -55,7 +55,7 @@ import klu.at.qrcodequest.Node;
 import klu.at.qrcodequest.QuestMethods;
 import klu.at.qrcodequest.R;
 
-public class IdentificationActivity extends ActionBarActivity implements OnMyLocationChangeListener  {
+public class IdentificationActivity extends BaseActivity implements OnMyLocationChangeListener  {
 
     //Variablen
     private Context context;
@@ -128,6 +128,8 @@ public class IdentificationActivity extends ActionBarActivity implements OnMyLoc
             initialiseGoogleMaps();
         }
 
+        createActionBar(data.getQuest().getName());
+
         context = this;
         AppDown.register(this); //Methode für das Beenden der Activity
 
@@ -191,35 +193,6 @@ public class IdentificationActivity extends ActionBarActivity implements OnMyLoc
             setCameraPosition(latitude, longitude);
         }
     }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_identification, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onBackPressed() {
-        Intent questActivityIntent = new Intent(this, QuestActivity.class);
-        startActivity(questActivityIntent);
-    }
-
-
 
     //Methoden & KLassen spezifisch für NFC
     private class NdefReaderTask extends AsyncTask<Tag, Void, String> {

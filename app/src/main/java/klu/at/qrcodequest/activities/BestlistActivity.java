@@ -1,33 +1,34 @@
 package klu.at.qrcodequest.activities;
 
-import android.app.Activity;
-import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+
+import org.json.JSONException;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Map.Entry;
+
 import klu.at.qrcodequest.AppDown;
 import klu.at.qrcodequest.QuestMethods;
 import klu.at.qrcodequest.R;
 import klu.at.qrcodequest.Score;
-import org.json.JSONException;
-
-import java.io.IOException;
-import java.util.*;
-import java.util.Map.Entry;
 
 
-public class BestlistActivity extends ActionBarActivity {
+public class BestlistActivity extends BaseActivity {
 
     ArrayList<Score> scores = new ArrayList<Score>();
     ArrayList<Score> bldata = new ArrayList<Score>();
     HashMap<String, Score> hMap = new HashMap<String, Score>();
     int questPk = 0;
-    Context context;
     TextView text1, text2, text3, text4, title;
     ProgressBar bar;
 
@@ -35,9 +36,10 @@ public class BestlistActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bestlist);
-        AppDown.register(this);
 
-        context = this;
+        createActionBar("Bestenliste");
+
+        AppDown.register(this);
 
         bar = (ProgressBar) findViewById(R.id.progressBar1);
 

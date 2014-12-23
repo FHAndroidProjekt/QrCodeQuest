@@ -25,7 +25,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 
-public class QuestActivity extends ActionBarActivity /*implements OnItemClickListener*/ {
+public class QuestActivity extends BaseActivity /*implements OnItemClickListener*/ {
 
     private ExpandableListView list;
     private ProgressBar bar;
@@ -41,16 +41,12 @@ public class QuestActivity extends ActionBarActivity /*implements OnItemClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quest);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.myToolbar);
-        toolbar.setTitle("Quests");
-        setSupportActionBar(toolbar);
-
-        Data data = (Data) getApplicationContext();
+        createActionBar("Quests");
 
         if (savedInstanceState != null){
             userId = savedInstanceState.getInt("userId");
             data.setUser(new User(userId));
-        }else{
+        } else {
             user = data.getUser();
             userId = data.getUser().getId();
         }
@@ -166,28 +162,8 @@ public class QuestActivity extends ActionBarActivity /*implements OnItemClickLis
         bar.setVisibility(View.INVISIBLE);
     }
 
-
-//    @Override
-//    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//
-//        String itemValue = (String) list.getItemAtPosition(position);
-//
-//
-//			if(quests.get(position).getDtRegistration() == 2){
-//
-//
-//        Intent qrreader = new Intent(getApplicationContext(), MainActivity.class);
-//        qrreader.putExtra("questPk", quests.get(position).getId());
-//        startActivity(qrreader);
-//
-//			}
-
-//			Toast.makeText(getApplicationContext(), "" + position + " " + itemValue, Toast.LENGTH_LONG).show();
-//    }
-
     @Override
     protected void onSaveInstanceState(Bundle savedInstanceState) {
-        // TODO Auto-generated method stub
         super.onSaveInstanceState(savedInstanceState);
         savedInstanceState.putInt("userId", userId);
     }

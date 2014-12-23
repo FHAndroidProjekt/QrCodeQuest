@@ -1,6 +1,5 @@
 package klu.at.qrcodequest.activities;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -13,17 +12,24 @@ import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnGroupExpandListener;
 import android.widget.ProgressBar;
 import android.widget.Toast;
-import klu.at.qrcodequest.*;
+
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
-
-import org.json.JSONException;
-
 import java.io.IOException;
 import java.util.ArrayList;
+
+import klu.at.qrcodequest.AppDown;
+import klu.at.qrcodequest.Data;
+import klu.at.qrcodequest.ExpandableListViewNodes;
+import klu.at.qrcodequest.HTTPHelper;
+import klu.at.qrcodequest.Node;
+import klu.at.qrcodequest.Quest;
+import klu.at.qrcodequest.QuestMethods;
+import klu.at.qrcodequest.R;
 
 public class MainActivity extends ActionBarActivity {
 
@@ -129,7 +135,7 @@ public class MainActivity extends ActionBarActivity {
                                 exist = true;
                             }
                         }
-                        if(exist == false){
+                        if(!exist){
                             new UserQuestNodeTask().execute(userQuestPk, node.getId());
                         }
                         Intent questions = new Intent(getApplicationContext(), QuestionsActivity.class);
@@ -218,7 +224,6 @@ public class MainActivity extends ActionBarActivity {
         protected void onPostExecute(Void result) {
             HTTPHelper.HTTPExceptionHandler(errorString, MainActivity.this);
 
-
             bar.setVisibility(View.INVISIBLE);
 
 //                ExpandableListViewNodes adapter = new ExpandableListViewNodes(getApplicationContext(), nodes, nodeIds, );
@@ -232,7 +237,6 @@ public class MainActivity extends ActionBarActivity {
 
         @Override
         protected Void doInBackground(Integer... params) {
-            // TODO Auto-generated method stub
 
             try {
                 String json = QuestMethods.setUserQuestNode(params[0], params[1]);
@@ -246,11 +250,7 @@ public class MainActivity extends ActionBarActivity {
                 data.setUserQuestNodePk(userQuestNodePk);
 
 
-            } catch (JSONException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
+            } catch (JSONException | IOException e) {
                 e.printStackTrace();
             }
 

@@ -97,8 +97,8 @@ public class ExpandableListViewNodes extends BaseExpandableListAdapter{
 		String location = nodes[groupPosition].getLocation();
 		String beschreibung = nodes[groupPosition].getDescription();
 		
-		TextView textLocation = (TextView) convertView.findViewById(R.id.textView3);
-		TextView textBeschreibung = (TextView) convertView.findViewById(R.id.textView4);
+		TextView textLocation = (TextView) convertView.findViewById(R.id.textViewNachname);
+		TextView textBeschreibung = (TextView) convertView.findViewById(R.id.textViewSpitzname);
 		
 		textLocation.setText(location);
 		textBeschreibung.setText(beschreibung);

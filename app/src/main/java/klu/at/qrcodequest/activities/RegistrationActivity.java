@@ -1,21 +1,27 @@
 package klu.at.qrcodequest.activities;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.view.View;
-import android.widget.*;
-import klu.at.qrcodequest.*;
-import klu.at.qrcodequest.activities.QuestActivity;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 
-public class RegistrationActivity extends ActionBarActivity {
+import klu.at.qrcodequest.Data;
+import klu.at.qrcodequest.HTTPHelper;
+import klu.at.qrcodequest.R;
+import klu.at.qrcodequest.User;
+
+public class RegistrationActivity extends BaseActivity {
 
     private TextView vornameText, nachnameText, spitznameText;
     private ProgressBar bar;
@@ -30,7 +36,8 @@ public class RegistrationActivity extends ActionBarActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
-        AppDown.register(this);
+
+        createActionBar("Registrierung");
 
         data = (Data) getApplicationContext();
         Bundle bundle = getIntent().getExtras();
@@ -39,9 +46,9 @@ public class RegistrationActivity extends ActionBarActivity {
         checkBox = (CheckBox) findViewById(R.id.checkBox);
         bar = (ProgressBar) findViewById(R.id.marker_progress);
         registerButton = (Button) findViewById(R.id.button);
-        vornameText = (EditText) findViewById(R.id.editText);
-        nachnameText = (EditText) findViewById(R.id.editText2);
-        spitznameText = (EditText) findViewById(R.id.editText3);
+        vornameText = (EditText) findViewById(R.id.editTextVorname);
+        nachnameText = (EditText) findViewById(R.id.editTextNachname);
+        spitznameText = (EditText) findViewById(R.id.editTextSpitzname);
 
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,9 +118,8 @@ public class RegistrationActivity extends ActionBarActivity {
             bar.setVisibility(View.GONE);
             if (!existing) { // Wenn der Nickname bereits verwendet wird in der Activity bleiben
                 Intent intent = new Intent (getApplicationContext(),QuestActivity.class);
-//                intent.putExtra("userPk", userPk);
-//                EventBus.getDefault().postSticky(user);
                 startActivity(intent);
+                finish();
             } else {
                 Toast.makeText(getApplicationContext(), "Dieser Spitzname ist leider bereits vergeben.", Toast.LENGTH_LONG).show();
                 registerButton.setClickable(true);

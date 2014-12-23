@@ -24,7 +24,7 @@ import org.json.JSONObject;
 
 import java.util.*;
 
-public class QuestionsActivity extends ActionBarActivity {
+public class QuestionsActivity extends BaseActivity {
 
     private static ArrayList <Question> questions;
     private SparseArray<String> answerSparseArray = new SparseArray<>();
@@ -43,15 +43,14 @@ public class QuestionsActivity extends ActionBarActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_questions);
-        AppDown.register(this);
 
         data = (Data) getApplicationContext();
         node = data.getNode();
         quest = data.getQuest();
         questionIDs = node.getUnfinishedQuestionIDs();
 
-        TextView nodeText = (TextView) findViewById(R.id.textViewNode);
-        nodeText.setText(node.getName());
+        createActionBar(node.getName());
+
         // Progress Bar
         bar = (ProgressBar) findViewById(R.id.marker_progress);
         loadQuestionsTextView = (TextView) findViewById(R.id.loadQuestionsText);
@@ -216,6 +215,7 @@ public class QuestionsActivity extends ActionBarActivity {
         Intent nodeIntent = new Intent (getApplicationContext(), newActivity);
         nodeIntent.putExtra("finished", true);
         startActivity(nodeIntent);
+        finish();
     }
 
     private void changeActivity() {
