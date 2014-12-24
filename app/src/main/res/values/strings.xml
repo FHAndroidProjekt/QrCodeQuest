@@ -34,5 +34,6 @@
     <string name="title_activity_identification">IdentificationActivity</string>
     <string name="title_activity_settings">SettingsActivity</string>
     <string name="title_activity_themes">ThemeActivity</string>
+    <string name="chevron_right">Chevron Right</string>
 
 </resources>
