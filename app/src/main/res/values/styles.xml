@@ -16,9 +16,10 @@
         <!--   theme UI controls like checkboxes and text fields -->
         <item name="colorAccent">#ff36dc43</item>
         <item name="android:textColorPrimary">#ffffffff</item>
+        <item name="android:textColorSecondary">#ff000000</item>
     </style>
 
-    <style name="AppTheme.Light" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme.LightGreen" parent="Theme.AppCompat.Light.NoActionBar">
 
         <!-- Main theme colors -->
         <!--   your app branding color for the app bar -->
@@ -28,5 +29,11 @@
         <!--   theme UI controls like checkboxes and text fields -->
         <item name="colorAccent">#ff36dc43</item>
         <item name="android:textColorPrimary">#ffffffff</item>
+        <item name="android:textColorSecondary">#ff000000</item>
+    </style>
+
+    <style name="AppTheme.Dark" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:textColorPrimary">#ffffffff</item>
+        <item name="android:textColorSecondary">#ffffffff</item>
     </style>
 </resources>

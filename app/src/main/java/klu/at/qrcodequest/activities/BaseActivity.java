@@ -2,8 +2,6 @@ package klu.at.qrcodequest.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -62,7 +60,7 @@ public abstract class BaseActivity extends ActionBarActivity {
     protected void getAttributes() {
         int[] attrs = {R.attr.colorPrimary};
         @SuppressWarnings("ResourceType")
-        TypedArray ta = obtainStyledAttributes(R.style.AppTheme_Light, attrs);
+        TypedArray ta = obtainStyledAttributes(R.style.AppTheme_LightGreen, attrs);
         ta.getColor(0, Color.RED);
     }
 }

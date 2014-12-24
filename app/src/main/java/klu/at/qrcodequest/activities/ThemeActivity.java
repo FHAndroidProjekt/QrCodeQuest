@@ -2,7 +2,6 @@ package klu.at.qrcodequest.activities;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
@@ -14,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -30,8 +28,8 @@ public class ThemeActivity extends BaseActivity {
         createActionBar("Themenauswahl");
 
         ListView listView = (ListView) findViewById(R.id.listViewSettings);
-        String[] items = {"FH Kärnten", "Material Light Green"};
-        int[] colors = {Color.RED, Color.GREEN};
+        String[] items = {"FH Kärnten", "Material Light Green", "Material Dark"};
+        int[] colors = {Color.RED, Color.GREEN, Color.DKGRAY};
         listView.setAdapter(new SettingsListAdapter(this, R.layout.activity_settings, R.id.textSettings, R.id.imageArrow, items, colors));
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -41,7 +39,10 @@ public class ThemeActivity extends BaseActivity {
                         changeTheme(R.style.AppTheme);
                         break;
                     case 1:
-                        changeTheme(R.style.AppTheme_Light);
+                        changeTheme(R.style.AppTheme_LightGreen);
+                        break;
+                    case 2:
+                        changeTheme(R.style.AppTheme_Dark);
                         break;
                     default:
                         break;

@@ -22,7 +22,7 @@
             android:layout_marginLeft="20sp"
             android:layout_marginRight="20sp"
             android:text="@string/location"
-            android:textColor="#000000"
+            android:textColor="?android:attr/textColorSecondary"
             android:textStyle="bold" />
 
         <TextView
@@ -30,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/text"
-            android:textColor="#000000" />
+            android:textColor="?android:attr/textColorSecondary" />
     </TableRow>
 
     <TableRow>
@@ -45,7 +45,7 @@
             android:layout_marginStart="20sp"
             android:layout_marginTop="20sp"
             android:text="@string/beschreibung"
-            android:textColor="#000000"
+            android:textColor="?android:attr/textColorSecondary"
             android:textStyle="bold" />
 
         <TextView
@@ -54,7 +54,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="21dp"
             android:text="@string/text"
-            android:textColor="#000000" />
+            android:textColor="?android:attr/textColorSecondary" />
 
     </TableRow>
 
