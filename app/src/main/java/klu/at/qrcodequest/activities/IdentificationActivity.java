@@ -517,8 +517,10 @@ public class IdentificationActivity extends BaseActivity implements OnMyLocation
         protected void onPostExecute(Void result) {
             HTTPHelper.HTTPExceptionHandler(errorString, IdentificationActivity.this);
             finishedNodeIds = getFinishedNodes(nodes);
-            System.out.println("Fertige Nodes!!!!!!!!" + finishedNodeIds);
 
+            if(isQuestFinished(finishedNodeIds, nodes)){
+                showQuestFinished();
+            }
             if(dtRegistration == 2 || dtRegistration == 3){
                 bar.setVisibility(View.INVISIBLE);
                 adapter = new ExpandableListViewNodes(getApplicationContext(), nodes, nodeIds, finishedNodeIds);
@@ -659,6 +661,32 @@ public class IdentificationActivity extends BaseActivity implements OnMyLocation
         }
         return finishedNodeIds;
 
+    }
+
+    private boolean isQuestFinished(ArrayList<Integer>finishedNodes, Node [] allNodes){
+        boolean state = false;
+        if(finishedNodes.size() == allNodes.length){
+            state = true;
+        }else{
+            state = false;
+        }
+        return state;
+    }
+
+    public void showQuestFinished() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setTitle("Info");
+
+        builder.setMessage("Sie haben bereits alle Stationen erfolgreich abgeschlossen.");
+
+        builder.setNeutralButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
 }
