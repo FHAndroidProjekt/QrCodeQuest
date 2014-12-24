@@ -15,7 +15,7 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/textView1"
+            android:id="@+id/textViewLocationLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="10sp"
@@ -26,7 +26,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/textViewNachname"
+            android:id="@+id/textViewLocation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/text"
@@ -36,7 +36,7 @@
     <TableRow>
 
         <TextView
-            android:id="@+id/textViewVorname"
+            android:id="@+id/textViewDescriptionLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="10sp"
@@ -49,7 +49,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/textViewSpitzname"
+            android:id="@+id/textViewDescription"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="21dp"

@@ -3,6 +3,8 @@ package klu.at.qrcodequest;
 import java.util.ArrayList;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,12 +18,20 @@ public class ExpandableListViewNodes extends BaseExpandableListAdapter{
 	private Context context;
 	private ArrayList <Integer> nodeIds;
     private ArrayList<Integer> finishedNodeIds;
+    private int textColor;
 	
 	public ExpandableListViewNodes(Context context, Node[] nodes, ArrayList<Integer>nodeIds, ArrayList<Integer>finishedNodeIds) {
 		this.nodes = nodes;
 		this.context = context;
 		this.nodeIds = nodeIds;
         this.finishedNodeIds = finishedNodeIds;
+
+        int[] attrs = {android.R.attr.textColorSecondary};
+        SharedPreferences sharedPreferences = context.getSharedPreferences("Settings", Context.MODE_PRIVATE);
+        int themeRessource = sharedPreferences.getInt("theme", R.style.AppTheme);
+        @SuppressWarnings("ResourceType")
+        TypedArray ta = context.obtainStyledAttributes(themeRessource, attrs);
+        textColor = ta.getColor(0, Color.WHITE);
 	}
 	
 
@@ -82,8 +92,9 @@ public class ExpandableListViewNodes extends BaseExpandableListAdapter{
             }
         }
 		
-		TextView textView = (TextView) convertView.findViewById(R.id.textView1);
+		TextView textView = (TextView) convertView.findViewById(R.id.textViewLocationLabel);
 		textView.setText(nodeName);
+        textView.setTextColor(textColor);
 		
 		return convertView;
 	}
@@ -97,11 +108,18 @@ public class ExpandableListViewNodes extends BaseExpandableListAdapter{
 		String location = nodes[groupPosition].getLocation();
 		String beschreibung = nodes[groupPosition].getDescription();
 		
-		TextView textLocation = (TextView) convertView.findViewById(R.id.textViewNachname);
-		TextView textBeschreibung = (TextView) convertView.findViewById(R.id.textViewSpitzname);
+		TextView textLocation = (TextView) convertView.findViewById(R.id.textViewLocation);
+		TextView textBeschreibung = (TextView) convertView.findViewById(R.id.textViewDescription);
 		
 		textLocation.setText(location);
 		textBeschreibung.setText(beschreibung);
+
+        TextView locactionLabel = (TextView) convertView.findViewById(R.id.textViewLocationLabel);
+        TextView descriptionLabel = (TextView) convertView.findViewById(R.id.textViewDescriptionLabel);
+        locactionLabel.setTextColor(textColor);
+        descriptionLabel.setTextColor(textColor);
+        textLocation.setTextColor(textColor);
+        textBeschreibung.setTextColor(textColor);
 		return convertView;
 	}
 

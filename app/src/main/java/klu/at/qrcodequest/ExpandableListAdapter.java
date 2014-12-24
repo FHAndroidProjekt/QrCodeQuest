@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.nfc.NfcAdapter;
 import android.os.AsyncTask;
@@ -27,10 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import klu.at.qrcodequest.activities.BestlistActivity;
-import klu.at.qrcodequest.activities.GoogleMapsActivity;
 import klu.at.qrcodequest.activities.IdentificationActivity;
-import klu.at.qrcodequest.activities.MainActivity;
-import klu.at.qrcodequest.activities.NFCActivity;
 
 public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
@@ -40,7 +39,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 	private List<String> listParents;
 	private List<Quest> quests;
 	private SparseIntArray userQuestMap;
-	private int userPk;
+	private int userPk, textColor;
 	
 	public ExpandableListAdapter(Context context, List<String> listParents, ArrayList<Quest> quests, SparseIntArray userQuestMap, int userPk, Activity activity) {
 		this.context = context;
@@ -49,6 +48,13 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 		this.quests = quests;
 		this.userQuestMap = userQuestMap;
 		this.userPk = userPk;
+
+        int[] attrs = {android.R.attr.textColorSecondary};
+        SharedPreferences sharedPreferences = activity.getSharedPreferences("Settings", Context.MODE_PRIVATE);
+        int themeRessource = sharedPreferences.getInt("theme", R.style.AppTheme);
+        @SuppressWarnings("ResourceType")
+        TypedArray ta = activity.obtainStyledAttributes(themeRessource, attrs);
+        textColor = ta.getColor(0, Color.WHITE);
 	}
 	
 	@Override
@@ -100,91 +106,90 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 			}
 		
 	
-		TextView textView = (TextView) convertView.findViewById(R.id.textView1);
+		TextView textView = (TextView) convertView.findViewById(R.id.textViewLocationLabel);
 		textView.setText(text);
+        textView.setTextColor(textColor);
 		return convertView;
 	}
 
-	@Override
-	public View getChildView(final int groupPosition, int childPosition,
-			boolean isLastChild, View convertView, ViewGroup parent) {
-		
-			UserHolder2 holder;
+    @Override
+    public View getChildView(final int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
 
-			LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			convertView = inflater.inflate(R.layout.list_child, parent, false);
-			
-			if(userQuestMap.indexOfKey(quests.get((int) getGroupId(groupPosition)).getId()) >= 0){
-				convertView.setBackgroundColor(Color.parseColor("#55FF0000"));
-			}
-			holder = new UserHolder2();
-			holder.anmelden = (Button) convertView.findViewById(R.id.sign);
-			holder.bestenliste = (Button)convertView.findViewById(R.id.best);
-			
-			if(userQuestMap.indexOfKey(quests.get((int) getGroupId(groupPosition)).getId()) >= 0){
-				System.out.println("" + userQuestMap.get(quests.get((int)getGroupId(groupPosition)).getId()));
-				holder.anmelden.setText("Fortsetzen");
-				
-			}else if(userQuestMap.indexOfKey(quests.get((int) getGroupId(groupPosition)).getId()) >= 0){
+        UserHolder2 holder;
 
-				holder.anmelden.setText("Anmelden");
-			}
-			
-			convertView.setTag(holder);
-		
-		final int id = (int)getGroupId(groupPosition);
-		String tquest = listParents.get(id);
-		
-		holder.anmelden.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        convertView = inflater.inflate(R.layout.list_child, parent, false);
 
-				Data data = (Data) context.getApplicationContext();
-				data.setQuest(quests.get((int) getGroupId(id)));
+        if (userQuestMap.indexOfKey(quests.get((int) getGroupId(groupPosition)).getId()) >= 0) {
+            convertView.setBackgroundColor(Color.parseColor("#55FF0000"));
+        }
+        holder = new UserHolder2();
+        holder.anmelden = (Button) convertView.findViewById(R.id.sign);
+        holder.bestenliste = (Button) convertView.findViewById(R.id.best);
 
-				if(quests.get((int)getGroupId(id)).getDtRegistration() == 2){
-					//QR-Code
-					if(userQuestMap.indexOfKey(quests.get((int) getGroupId(groupPosition)).getId()) < 0){
-						new UserQuestTask().execute(groupPosition);
-						
-					}else{
-						data.setUserQuestPk(userQuestMap.get(quests.get((int) getGroupId(groupPosition)).getId()));
-					}
-					intent = new Intent(context,IdentificationActivity.class);
-				}else if(quests.get((int)getGroupId(id)).getDtRegistration() == 3){
-					NfcAdapter nfcAdapter = NfcAdapter.getDefaultAdapter(v.getContext());
-					if (nfcAdapter == null) {
-						Toast.makeText(v.getContext(), "Auf diesem Gerät wird leider kein NFC unterstützt.", Toast.LENGTH_LONG).show();
-						return;
-					}
-					if(userQuestMap.indexOfKey(quests.get((int) getGroupId(groupPosition)).getId()) < 0){
-						new UserQuestTask().execute(groupPosition);
-					}else{
-						data.setUserQuestPk(userQuestMap.get(quests.get((int) getGroupId(groupPosition)).getId()));
-					}
-					intent = new Intent(context,IdentificationActivity.class);
-				}else if(quests.get((int)getGroupId(id)).getDtRegistration() == 4){
-					if(userQuestMap.indexOfKey(quests.get((int) getGroupId(groupPosition)).getId()) < 0){
-						new UserQuestTask().execute(groupPosition);
-					}
-					intent = new Intent(context, IdentificationActivity.class);
-					
-				}
-				intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); //dadurch kann eine neue Activity außerhalb einer Activity gestartet werden
-				context.startActivity(intent);
-				
-			}
-		});
-		
-		holder.bestenliste.setOnClickListener(new OnClickListener() {
-		
-			@Override
-			public void onClick(View v) {
-				
-				intent = new Intent(context, BestlistActivity.class);
-				intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); 
-				intent.putExtra("questPk", quests.get((int)getGroupId(id)).getId());
+        if (userQuestMap.indexOfKey(quests.get((int) getGroupId(groupPosition)).getId()) >= 0) {
+            System.out.println("" + userQuestMap.get(quests.get((int) getGroupId(groupPosition)).getId()));
+            holder.anmelden.setText("Fortsetzen");
+
+        } else if (userQuestMap.indexOfKey(quests.get((int) getGroupId(groupPosition)).getId()) >= 0) {
+
+            holder.anmelden.setText("Anmelden");
+        }
+
+        convertView.setTag(holder);
+
+        final int id = (int) getGroupId(groupPosition);
+        String tquest = listParents.get(id);
+
+        holder.anmelden.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                Data data = (Data) context.getApplicationContext();
+                data.setQuest(quests.get((int) getGroupId(id)));
+
+                if (quests.get((int) getGroupId(id)).getDtRegistration() == 2) {
+                    //QR-Code
+                    if (userQuestMap.indexOfKey(quests.get((int) getGroupId(groupPosition)).getId()) < 0) {
+                        new UserQuestTask().execute(groupPosition);
+
+                    } else {
+                        data.setUserQuestPk(userQuestMap.get(quests.get((int) getGroupId(groupPosition)).getId()));
+                    }
+                    intent = new Intent(context, IdentificationActivity.class);
+                } else if (quests.get((int) getGroupId(id)).getDtRegistration() == 3) {
+                    NfcAdapter nfcAdapter = NfcAdapter.getDefaultAdapter(v.getContext());
+                    if (nfcAdapter == null) {
+                        Toast.makeText(v.getContext(), "Auf diesem Gerät wird leider kein NFC unterstützt.", Toast.LENGTH_LONG).show();
+                        return;
+                    }
+                    if (userQuestMap.indexOfKey(quests.get((int) getGroupId(groupPosition)).getId()) < 0) {
+                        new UserQuestTask().execute(groupPosition);
+                    } else {
+                        data.setUserQuestPk(userQuestMap.get(quests.get((int) getGroupId(groupPosition)).getId()));
+                    }
+                    intent = new Intent(context, IdentificationActivity.class);
+                } else if (quests.get((int) getGroupId(id)).getDtRegistration() == 4) {
+                    if (userQuestMap.indexOfKey(quests.get((int) getGroupId(groupPosition)).getId()) < 0) {
+                        new UserQuestTask().execute(groupPosition);
+                    }
+                    intent = new Intent(context, IdentificationActivity.class);
+
+                }
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); //dadurch kann eine neue Activity außerhalb einer Activity gestartet werden
+                context.startActivity(intent);
+
+            }
+        });
+
+        holder.bestenliste.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                intent = new Intent(context, BestlistActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("questPk", quests.get((int) getGroupId(id)).getId());
 //				context.startActivity(intent);
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -198,12 +203,12 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                     activity.startActivity(intent);
                     activity.overridePendingTransition(R.anim.slide_in_right, R.anim.fade_out);
                 }
-			}
-		});
-	
-		
-		return convertView;
-	}
+            }
+        });
+
+
+        return convertView;
+    }
 
 	@Override
 	public boolean isChildSelectable(int groupPosition, int childPosition) {

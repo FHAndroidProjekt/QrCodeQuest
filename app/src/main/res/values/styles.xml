@@ -20,13 +20,8 @@
     </style>
 
     <style name="AppTheme.LightGreen" parent="Theme.AppCompat.Light.NoActionBar">
-
-        <!-- Main theme colors -->
-        <!--   your app branding color for the app bar -->
         <item name="colorPrimary">#ff67dc58</item>
-        <!--   darker variant for the status bar and contextual app bars -->
         <item name="colorPrimaryDark">#ff02aa00</item>
-        <!--   theme UI controls like checkboxes and text fields -->
         <item name="colorAccent">#ff36dc43</item>
         <item name="android:textColorPrimary">#ffffffff</item>
         <item name="android:textColorSecondary">#ff000000</item>

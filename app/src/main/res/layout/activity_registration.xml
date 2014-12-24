@@ -9,7 +9,7 @@
         layout="@layout/toolbar" />
 
     <TextView
-        android:id="@+id/textViewVorname"
+        android:id="@+id/textViewDescriptionLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/myToolbar"
@@ -20,12 +20,12 @@
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
-        android:id="@+id/textViewNachname"
+        android:id="@+id/textViewLocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textViewVorname"
-        android:layout_alignStart="@+id/textViewVorname"
-        android:layout_below="@+id/textViewVorname"
+        android:layout_alignLeft="@+id/textViewDescriptionLabel"
+        android:layout_alignStart="@+id/textViewDescriptionLabel"
+        android:layout_below="@+id/textViewDescriptionLabel"
         android:layout_marginEnd="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="30dp"
@@ -33,12 +33,12 @@
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
-        android:id="@+id/textViewSpitzname"
+        android:id="@+id/textViewDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textViewNachname"
-        android:layout_alignStart="@+id/textViewNachname"
-        android:layout_below="@+id/textViewNachname"
+        android:layout_alignLeft="@+id/textViewLocation"
+        android:layout_alignStart="@+id/textViewLocation"
+        android:layout_below="@+id/textViewLocation"
         android:layout_marginTop="30dp"
         android:text="@string/spitzname"
         android:textAppearance="?android:attr/textAppearanceLarge" />
@@ -52,8 +52,8 @@
         android:layout_marginEnd="5dp"
         android:layout_marginRight="5dp"
         android:layout_marginTop="16dp"
-        android:layout_toEndOf="@+id/textViewNachname"
-        android:layout_toRightOf="@+id/textViewNachname"
+        android:layout_toEndOf="@+id/textViewLocation"
+        android:layout_toRightOf="@+id/textViewLocation"
         android:layout_below="@id/myToolbar"
         android:background="@drawable/textfield_style1"
         android:inputType="textPersonName"
@@ -67,8 +67,8 @@
         android:layout_alignRight="@+id/editTextVorname"
         android:layout_below="@+id/editTextVorname"
         android:layout_marginTop="24dp"
-        android:layout_toEndOf="@+id/textViewNachname"
-        android:layout_toRightOf="@+id/textViewNachname"
+        android:layout_toEndOf="@+id/textViewLocation"
+        android:layout_toRightOf="@+id/textViewLocation"
         android:background="@drawable/textfield_style1"
         android:inputType="textPersonName"
         android:singleLine="true" />
@@ -91,9 +91,9 @@
         android:id="@+id/checkBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textViewSpitzname"
-        android:layout_alignStart="@+id/textViewSpitzname"
-        android:layout_below="@+id/textViewSpitzname"
+        android:layout_alignLeft="@+id/textViewDescription"
+        android:layout_alignStart="@+id/textViewDescription"
+        android:layout_below="@+id/textViewDescription"
         android:layout_marginTop="28dp"
         android:button="@drawable/checkbox_background"
         android:text="@string/nameInBestenliste"

@@ -42,6 +42,7 @@ public class QuestActivity extends BaseActivity /*implements OnItemClickListener
         setContentView(R.layout.activity_quest);
 
         createActionBar("Quests");
+
         if (savedInstanceState != null){
             userId = savedInstanceState.getInt("userId");
             data.setUser(new User(userId));
@@ -58,7 +59,7 @@ public class QuestActivity extends BaseActivity /*implements OnItemClickListener
         list = (ExpandableListView) findViewById(R.id.listView1);
 
         getQuests();
-        getAttributes();
+
         list.setOnGroupExpandListener(new OnGroupExpandListener(){
 
 			@Override

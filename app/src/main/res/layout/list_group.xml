@@ -9,14 +9,14 @@
     tools:context="at.klu.quest.MainActivity" >
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/textViewLocationLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:text="@string/questname"
-        android:textColor="?android:attr/textColorSecondary"
+        android:textColor="#ff000000"
         android:textSize="16sp" />
     
 </RelativeLayout>
