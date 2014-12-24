@@ -81,6 +81,11 @@ public class BestlistActivity extends BaseActivity {
             text3 = new TextView(this);
             text4 = new TextView(this);
 
+            text1.setTextColor(textColor2);
+            text2.setTextColor(textColor2);
+            text3.setTextColor(textColor2);
+            text4.setTextColor(textColor2);
+
 //    		Drawable hintergrund = getResources().getDrawable(R.drawable.bestenliste_style); //
 
             //textViews erhalten einen Hintergrund mit schwarzem Rahmen für die Tabellenansicht

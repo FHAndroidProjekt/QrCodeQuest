@@ -33,8 +33,7 @@ public class SettingsActivity extends BaseActivity {
         ListView listView = (ListView) findViewById(R.id.listViewSettings);
         String[] items = {"Design", "Begrüßung aktivieren", "Alle Fortschritte zurücksetzen"};
         int[] extra = {1, 2, 0}; // 1:arrow, 2:switch
-        int standardColor = R.attr.textAppearanceListItem; // TODO Find secondary color of theme
-        int[] colors = {Color.BLACK, standardColor, Color.BLUE};
+        int[] colors = {textColor2, textColor2, Color.BLUE};
         listView.setAdapter(new SettingsListAdapter(this, R.layout.activity_settings, R.id.textSettings, R.id.imageArrow, items, extra, colors));
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

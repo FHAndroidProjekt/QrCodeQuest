@@ -21,6 +21,7 @@ public abstract class BaseActivity extends ActionBarActivity {
     protected Data data;
     protected int theme = R.style.AppTheme;
     private SharedPreferences sharedPreferences;
+    protected int textColor1, textColor2, windowsBackgroundColor;
 
 
     @Override
@@ -28,6 +29,7 @@ public abstract class BaseActivity extends ActionBarActivity {
         sharedPreferences = getSharedPreferences("Settings", MODE_PRIVATE);
         theme = sharedPreferences.getInt("theme", R.style.AppTheme);
         setTheme(theme);
+        getAttributes();
         super.onCreate(savedInstanceState);
 
     }
@@ -66,7 +68,6 @@ public abstract class BaseActivity extends ActionBarActivity {
     protected void onResume(){
         super.onResume();
         if (sharedPreferences.getInt("theme", R.style.AppTheme) != theme) {
-            System.out.println("Now");
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 @Override
@@ -78,10 +79,18 @@ public abstract class BaseActivity extends ActionBarActivity {
         }
     }
 
-    protected void getAttributes() {
-        int[] attrs = {R.attr.colorPrimary};
+    protected void getAttributes() { // Gets the Attributes of the current applied theme
+        int[] attrs = {android.R.attr.textColorPrimary, android.R.attr.textColorSecondary, android.R.attr.windowBackground};
+        int themeRessource = sharedPreferences.getInt("theme", R.style.AppTheme);
         @SuppressWarnings("ResourceType")
-        TypedArray ta = obtainStyledAttributes(R.style.AppTheme_LightGreen, attrs);
-        ta.getColor(0, Color.RED);
+        TypedArray ta = obtainStyledAttributes(themeRessource, attrs);
+        textColor1 = ta.getColor(0, Color.WHITE);
+        textColor2 = ta.getColor(1, Color.BLACK);
+        try {
+            windowsBackgroundColor = ta.getColor(3, Color.WHITE);
+        } catch (Exception e) {
+
+        }
     }
+
 }

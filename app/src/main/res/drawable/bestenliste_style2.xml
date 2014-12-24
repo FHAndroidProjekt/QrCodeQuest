@@ -3,12 +3,10 @@
     
     <item>
         <shape >
-            <stroke 
-                android:width="1sp"
-                android:color="#000000"/>
-            <solid  
-                android:color="#FFFFFF"/>
-            <padding 
+            <!--<stroke-->
+                <!--android:width="1sp"-->
+                <!--android:color="?android:attr/textColorSecondary"/>-->
+            <padding
                 android:left="5sp"
                 android:right="5sp"/>
         </shape>
@@ -17,7 +15,7 @@
         <shape >
             <stroke 
                 android:width="1sp"
-                android:color="#FFFFFF"/>
+                android:color="?android:attr/textColorSecondary"/>
             
         </shape>
     </item>
