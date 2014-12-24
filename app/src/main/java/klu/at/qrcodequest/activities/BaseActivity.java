@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -18,11 +19,15 @@ public abstract class BaseActivity extends ActionBarActivity {
 
     protected Toolbar toolbar;
     protected Data data;
+    protected int theme = R.style.AppTheme;
+    private SharedPreferences sharedPreferences;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        SharedPreferences sharedPreferences = getSharedPreferences("Settings", MODE_PRIVATE);
-        setTheme(sharedPreferences.getInt("theme", R.style.AppTheme));
+        sharedPreferences = getSharedPreferences("Settings", MODE_PRIVATE);
+        theme = sharedPreferences.getInt("theme", R.style.AppTheme);
+        setTheme(theme);
         super.onCreate(savedInstanceState);
 
     }
@@ -54,6 +59,22 @@ public abstract class BaseActivity extends ActionBarActivity {
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        if (sharedPreferences.getInt("theme", R.style.AppTheme) != theme) {
+            System.out.println("Now");
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    recreate();
+                    theme = sharedPreferences.getInt("theme", R.style.AppTheme);
+                }
+            }, 1);
         }
     }
 
