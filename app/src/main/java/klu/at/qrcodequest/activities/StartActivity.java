@@ -2,6 +2,7 @@ package klu.at.qrcodequest.activities;
 
 import android.animation.Animator;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
@@ -102,15 +103,25 @@ public class StartActivity extends BaseActivity {
                         // Wenn User existiert keine Registrierung
                         intent = new Intent(getApplicationContext(), QuestActivity.class);
 
-                        TextView welcomeUser = (TextView) findViewById(R.id.textViewUser);
-                        welcomeUser.setTypeface(typeface);
-                        if (user.getFirstname().equals("unknown")) {
-                            welcomeUser.setText("zurück " + user.getNickname() + "!");
-                        } else {
-                            welcomeUser.setText("zurück " + user.getFirstname() + "!");
+                        SharedPreferences preferences = getSharedPreferences("Settings", MODE_PRIVATE);
+                        if (preferences.getBoolean("Intro", true)) { // Begrüßung
+
+                            TextView welcomeUser = (TextView) findViewById(R.id.textViewUser);
+                            welcomeUser.setTypeface(typeface);
+                            if (user.getFirstname().equals("unknown")) {
+                                welcomeUser.setText("zurück " + user.getNickname() + "!");
+                            } else {
+                                welcomeUser.setText("zurück " + user.getFirstname() + "!");
+                            }
+
+                            startTimer();
+                        } else { // Wenn Begrüßung deaktiviert
+                            startActivity(intent);
+                            overridePendingTransition(R.anim.fade_in, R.anim.abc_fade_out);
+                            finish();
                         }
 
-                        startTimer();
+
                     }
                     ProgressBar progressBar = (ProgressBar) findViewById(R.id.marker_progress);
                     progressBar.setVisibility(View.INVISIBLE);
