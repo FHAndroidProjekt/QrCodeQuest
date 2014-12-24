@@ -73,6 +73,7 @@ public class IdentificationActivity extends BaseActivity implements OnMyLocation
     private int dtRegistration;
     private ArrayList<Integer> nodeIds = new ArrayList<Integer>();
     private ArrayList<Integer> finishedNodeIds = new ArrayList<Integer>();
+    private int endScore;
 
     //Variablen spezifisch für NFC
     public final String MIME_TEXT_PLAIN = "text/plain";
@@ -498,6 +499,7 @@ public class IdentificationActivity extends BaseActivity implements OnMyLocation
 
                 nodeIds = QuestMethods.getFinishedNodes(userQuestId, getApplicationContext());
 
+                endScore = QuestMethods.getEndScore(userQuestId);
 
 
             } catch (JSONException e) {
@@ -678,7 +680,7 @@ public class IdentificationActivity extends BaseActivity implements OnMyLocation
 
         builder.setTitle("Info");
 
-        builder.setMessage("Sie haben bereits alle Stationen erfolgreich abgeschlossen.");
+        builder.setMessage("Sie haben Alle Stationen abgeschlossen.\n\nIhre Punkteanzahl: " + endScore);
 
         builder.setNeutralButton("OK", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {

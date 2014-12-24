@@ -147,8 +147,7 @@ public class QuestMethods {
         }
     	return nodeIds;
     }
-     
-    
+
     public static String setUserQuestNode(int userquestId, int nodeId) throws JSONException, IOException{
 
     	JSONObject userquest = new JSONObject();
@@ -174,5 +173,21 @@ public class QuestMethods {
     	
     	return output;
     	
+    }
+
+    public static int getEndScore (int userQuestPk) throws JSONException, IOException {
+
+        int score;
+
+        String json = HTTPHelper.makeGetRequest("http://193.171.127.102:8080/Quest/userQuest/score?userQuestPk=" + userQuestPk);
+
+        JSONObject obj = new JSONObject(json);
+
+        System.out.println("Json" + json );
+
+        score = obj.getInt("score");
+
+        System.out.println("EndScore" +  score);
+        return score;
     }
 }
