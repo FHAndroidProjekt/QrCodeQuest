@@ -32,7 +32,7 @@ import klu.at.qrcodequest.R;
 import klu.at.qrcodequest.User;
 import klu.at.qrcodequest.VolleySingleton;
 
-public class StartActivity extends ActionBarActivity {
+public class StartActivity extends BaseActivity {
 
     private Intent intent;
     private Button start;

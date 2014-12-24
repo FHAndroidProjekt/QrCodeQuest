@@ -3,14 +3,13 @@ package klu.at.qrcodequest.activities;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.support.v7.app.ActionBarActivity;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -18,38 +17,45 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.ViewFlipper;
-
-import java.util.zip.Inflater;
 
 import klu.at.qrcodequest.R;
 
-public class SettingsActivity extends BaseActivity {
+public class ThemeActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        createActionBar("Einstellungen");
+        createActionBar("Themenauswahl");
 
         ListView listView = (ListView) findViewById(R.id.listViewSettings);
-        String[] items = {"Design", "Alle Fortschritte zurücksetzen"};
-        boolean[] arrow = {true, false};
-        int[] colors = {Color.BLACK, Color.BLUE};
-        listView.setAdapter(new SettingsListAdapter(this, R.layout.activity_settings, R.id.textSettings, R.id.imageArrow, items, arrow, colors));
+        String[] items = {"FH Kärnten", "Material Light Green"};
+        int[] colors = {Color.RED, Color.GREEN};
+        listView.setAdapter(new SettingsListAdapter(this, R.layout.activity_settings, R.id.textSettings, R.id.imageArrow, items, colors));
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
                 switch (position) {
                     case 0:
-                        startActivity(new Intent(getApplicationContext(), ThemeActivity.class));
+                        changeTheme(R.style.AppTheme);
+                        break;
+                    case 1:
+                        changeTheme(R.style.AppTheme_Light);
                         break;
                     default:
                         break;
                 }
             }
         });
+    }
+
+    private void changeTheme(int styleId) {
+        SharedPreferences sharedPreferences = getSharedPreferences("Settings", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt("theme", styleId);
+        editor.apply();
+        recreate();
     }
 
     @Override
@@ -64,11 +70,10 @@ public class SettingsActivity extends BaseActivity {
         Activity context;
         int layoutId, textViewId, imageViewId;
         String[] items;
-        boolean[] arrows;
         int[] colors;
         private LayoutInflater inflater;
 
-        public SettingsListAdapter(Activity context, int layoutId, int textViewId, int imageViewId, String[] items, boolean[] arrows, int[] colors) {
+        public SettingsListAdapter(Activity context, int layoutId, int textViewId, int imageViewId, String[] items, int[] colors) {
             super(context, layoutId, items);
 
             this.context = context;
@@ -76,7 +81,6 @@ public class SettingsActivity extends BaseActivity {
             this.textViewId = textViewId;
             this.imageViewId = imageViewId;
             this.items = items;
-            this.arrows = arrows;
             this.colors = colors;
         }
 
@@ -88,11 +92,12 @@ public class SettingsActivity extends BaseActivity {
 
             TextView label=(TextView)convertView.findViewById(textViewId);
             label.setText(items[pos]);
-            label.setTextColor(colors[pos]);
-
-            if (arrows[pos]) {
-                ImageView icon=(ImageView)convertView.findViewById(imageViewId);
-                icon.setImageResource(R.drawable.ic_action_chevron_right);
+            int[] colorGradient = new int[]{colors[pos], Color.TRANSPARENT};
+            GradientDrawable gd = new GradientDrawable(GradientDrawable.Orientation.RIGHT_LEFT, colorGradient);
+            if(android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN) {
+                convertView.setBackgroundDrawable(gd);
+            } else {
+                convertView.setBackground(gd);
             }
 
             return convertView;

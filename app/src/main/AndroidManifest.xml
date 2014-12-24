@@ -108,6 +108,10 @@
             android:name=".activities.SettingsActivity"
             android:label="@string/title_activity_settings" >
         </activity>
+        <activity
+            android:name=".activities.ThemeActivity"
+            android:label="@string/title_activity_themes" >
+        </activity>
     </application>
 
 </manifest>
