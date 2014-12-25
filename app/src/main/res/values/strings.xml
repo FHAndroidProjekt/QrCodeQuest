@@ -36,5 +36,6 @@
     <string name="title_activity_themes">ThemeActivity</string>
     <string name="chevron_right">Chevron Right</string>
     <string name="questname">questname</string>
+    <string name="noText"></string>
 
 </resources>

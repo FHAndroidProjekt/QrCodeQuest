@@ -6,7 +6,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="at.klu.quest.MainActivity" >
+    tools:context="at.klu.quest.MainActivity"
+    android:clickable="false">
 
     <TextView
         android:id="@+id/textViewLocationLabel"
@@ -18,5 +19,14 @@
         android:text="@string/questname"
         android:textColor="#ff000000"
         android:textSize="16sp" />
-    
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView"
+        android:layout_alignTop="@+id/textViewLocationLabel"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:src= "@drawable/check"/>
+
 </RelativeLayout>

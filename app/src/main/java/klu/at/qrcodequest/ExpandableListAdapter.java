@@ -19,6 +19,8 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -99,8 +101,11 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 			String text = (String) getGroup(groupPosition);
 		
 			LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			convertView = inflater.inflate(R.layout.list_group, parent, false);	
-			;
+			convertView = inflater.inflate(R.layout.list_group, parent, false);
+
+            ImageView imageView = (ImageView) convertView.findViewById(R.id.imageView);
+            imageView.setVisibility(View.INVISIBLE);
+
 			if(userQuestMap.indexOfKey(quests.get((int) getGroupId(groupPosition)).getId()) >= 0 ){
 				convertView.setBackgroundColor(Color.parseColor("#70FF0000"));
 			}
@@ -120,9 +125,9 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         convertView = inflater.inflate(R.layout.list_child, parent, false);
 
-        if (userQuestMap.indexOfKey(quests.get((int) getGroupId(groupPosition)).getId()) >= 0) {
-            convertView.setBackgroundColor(Color.parseColor("#55FF0000"));
-        }
+//        if (userQuestMap.indexOfKey(quests.get((int) getGroupId(groupPosition)).getId()) >= 0) {
+//            convertView.setBackgroundColor(Color.parseColor("#55FF0000"));
+//        }
         holder = new UserHolder2();
         holder.anmelden = (Button) convertView.findViewById(R.id.sign);
         holder.bestenliste = (Button) convertView.findViewById(R.id.best);

@@ -10,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 public class ExpandableListViewNodes extends BaseExpandableListAdapter{
@@ -73,12 +75,11 @@ public class ExpandableListViewNodes extends BaseExpandableListAdapter{
 	@Override
 	public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
 
-		String nodeName = (String) getGroup(groupPosition);
-		
-	
 		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		convertView = inflater.inflate(R.layout.list_group, parent, false);	
-		
+		convertView = inflater.inflate(R.layout.list_group, parent, false);
+
+        String nodeName = (String) getGroup(groupPosition);
+        ImageView imageView = (ImageView) convertView.findViewById(R.id.imageView);
 		System.out.println("" + nodeIds);
 		
 		for (int x = 0; x < nodeIds.size(); x++){
@@ -86,9 +87,11 @@ public class ExpandableListViewNodes extends BaseExpandableListAdapter{
 				convertView.setBackgroundColor(Color.parseColor("#70FF0000"));
 		    }
 		}
+        imageView.setVisibility(View.INVISIBLE);
         for(int i = 0; i< finishedNodeIds.size(); i++){
             if (nodes[(int)getGroupId(groupPosition)].getId() == finishedNodeIds.get(i)){
-                convertView.setBackgroundColor(Color.parseColor("#900000FF"));
+//                convertView.setBackgroundColor(Color.parseColor("#900000FF"));
+                imageView.setVisibility(View.VISIBLE);
             }
         }
 		
