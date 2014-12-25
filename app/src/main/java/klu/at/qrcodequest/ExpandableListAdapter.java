@@ -183,6 +183,8 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
                 }
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); //dadurch kann eine neue Activity außerhalb einer Activity gestartet werden
+
+                activity.finish();
                 context.startActivity(intent);
 
             }

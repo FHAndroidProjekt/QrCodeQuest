@@ -8,6 +8,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.Resources;
+import android.graphics.Color;
 import android.location.Location;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
@@ -19,12 +21,14 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.SparseIntArray;
+import android.view.ContextThemeWrapper;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -54,6 +58,8 @@ import klu.at.qrcodequest.HTTPHelper;
 import klu.at.qrcodequest.Node;
 import klu.at.qrcodequest.QuestMethods;
 import klu.at.qrcodequest.R;
+
+import static android.graphics.Color.RED;
 
 public class IdentificationActivity extends BaseActivity implements OnMyLocationChangeListener  {
 
@@ -687,10 +693,32 @@ public class IdentificationActivity extends BaseActivity implements OnMyLocation
 
             }
         });
+
+
         AlertDialog dialog = builder.create();
-        dialog.show();
+       dialog.show();
     }
 
+//    public AlertDialog customizeAlertDialog(AlertDialog dialog) {
+//
+//
+//        Resources resources = dialog.getContext().getResources();
+//        int color = resources.getColor(android.R.color.holo_red_dark);
+//        System.out.println("" + color);
+//
+//        int alertTitleId = resources.getIdentifier("android:id/alertTitle", null, null);
+//        TextView alertTitle = (TextView) dialog.findViewById(alertTitleId);
+//        alertTitle.setTextColor(color);
+//
+//        return dialog;
+//
+//    }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent questActivity = new Intent(this, QuestActivity.class);
+        startActivity(questActivity);
+    }
 }
 
 
