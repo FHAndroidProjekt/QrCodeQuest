@@ -37,5 +37,6 @@
     <string name="chevron_right">Chevron Right</string>
     <string name="questname">questname</string>
     <string name="noText"></string>
+    <string name="title">QrCodeQuest</string>
 
 </resources>
