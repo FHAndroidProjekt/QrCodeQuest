@@ -120,7 +120,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     @Override
     public View getChildView(final int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
 
-        UserHolder2 holder;
+        UserHolder holder;
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         convertView = inflater.inflate(R.layout.list_child, parent, false);
@@ -128,7 +128,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 //        if (userQuestMap.indexOfKey(quests.get((int) getGroupId(groupPosition)).getId()) >= 0) {
 //            convertView.setBackgroundColor(Color.parseColor("#55FF0000"));
 //        }
-        holder = new UserHolder2();
+        holder = new UserHolder();
         holder.anmelden = (Button) convertView.findViewById(R.id.sign);
         holder.bestenliste = (Button) convertView.findViewById(R.id.best);
 
@@ -222,7 +222,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 		return false;
 	}
 	
-	static class UserHolder2{
+	static class UserHolder{
 		Button bestenliste;
 		Button anmelden;
 	}

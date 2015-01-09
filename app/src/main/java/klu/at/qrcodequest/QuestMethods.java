@@ -13,8 +13,8 @@ import java.util.ArrayList;
 
 public class QuestMethods {
 
-	public static Node[] getNodes(int questPk) throws JSONException, IOException {
-		String json = HTTPHelper.makeGetRequest("http://193.171.127.102:8080/Quest/quest/show/" + questPk + ".json");
+	public static Node[] getNodes(int questId) throws JSONException, IOException {
+		String json = HTTPHelper.makeGetRequest("http://193.171.127.102:8080/Quest/quest/show/" + questId + ".json");
 
 		Gson gson = new Gson();
 		Node[] nodes = gson.fromJson(new JSONObject(json).getJSONArray("nodes").toString(), Node[].class);
@@ -22,8 +22,7 @@ public class QuestMethods {
 		for (Node node : nodes) {
 			String json2 = HTTPHelper.makeGetRequest("http://193.171.127.102:8080/Quest/node/show/" + node.getId() + ".json");
 			node.setQuestionIDs(new JSONObject(json2).getJSONArray("questions"));
-			node.setQuestPk(questPk);
-			System.out.println(node);
+			node.setQuestPk(questId);
 		}
 
 		return nodes;
@@ -73,8 +72,7 @@ public class QuestMethods {
     	userquest.put("quest", quest);
     	
     	HTTPHelper.makeJSONPost("http://193.171.127.102:8080/Quest/userQuest/save.json", userquest.toString());
-    	
-//    	System.out.println("" + userquest);
+
     }
     
     public static boolean getUserQuest(int userId, int questId) throws IOException{
@@ -91,7 +89,6 @@ public class QuestMethods {
     public static int getUserQuestPk (int userId, int questId) throws JSONException, IOException {
         String json = HTTPHelper.makeGetRequest("http://193.171.127.102:8080/Quest/userQuest/get?userPk=" + userId + "&questPk=" + questId);
 
-        System.out.println("" + json);
         JSONObject obj = new JSONArray(json).getJSONObject(0);
 
         int userQuestPk = obj.getInt("id");
@@ -125,13 +122,11 @@ public class QuestMethods {
                 JSONObject question = scoreEintrag.getJSONObject("question");
                 int questionId = question.getInt("id");
 
-                System.out.println("questionId" + questionId + "  scoreId" + scoreId);
                 finishedQuestions.append(questionId, scoreId);
                 userQuestNodePKs.append(questionId, obj.getInt("id"));
             }
     		
     		int userQuestNodePk = obj.getInt("id");
-            System.out.println("UserQuestNodePk in der Methode: " + userQuestNodePk);
 
     		int nodePk = nodeId.getInt("id");
     		
@@ -148,46 +143,35 @@ public class QuestMethods {
     	return nodeIds;
     }
 
-    public static String setUserQuestNode(int userquestId, int nodeId) throws JSONException, IOException{
+    public static String setUserQuestNode(int userQuestId, int nodeId) throws JSONException, IOException{
 
-    	JSONObject userquest = new JSONObject();
+    	JSONObject userQuest = new JSONObject();
     	
-    	userquest.put("id", userquestId);
-    	
-    	System.out.println("" + userquest.toString());
+    	userQuest.put("id", userQuestId);
     	
     	JSONObject node = new JSONObject();
+
     	
     	node.put("id", nodeId);
     	
-    	System.out.println("" + node.toString());
+    	JSONObject userQuestNode = new JSONObject();
     	
-    	JSONObject userquestnode = new JSONObject();
+    	userQuestNode.put("userQuest", userQuest);
+    	userQuestNode.put("node", node);
     	
-    	userquestnode.put("userQuest", userquest);
-    	userquestnode.put("node", node);
-    	
-    	System.out.println("" + userquestnode.toString());
-    	
-    	String output = HTTPHelper.makeJSONPost("http://193.171.127.102:8080/Quest/userQuestNode/save.json", userquestnode.toString());
+    	String output = HTTPHelper.makeJSONPost("http://193.171.127.102:8080/Quest/userQuestNode/save.json", userQuestNode.toString());
     	
     	return output;
     	
     }
 
-    public static int getEndScore (int userQuestPk) throws JSONException, IOException {
+    public static int getEndScore (int userQuestId) throws JSONException, IOException {
 
-        int score;
-
-        String json = HTTPHelper.makeGetRequest("http://193.171.127.102:8080/Quest/userQuest/score?userQuestPk=" + userQuestPk);
-
+        String json = HTTPHelper.makeGetRequest("http://193.171.127.102:8080/Quest/userQuest/score?userQuestPk=" + userQuestId);
         JSONObject obj = new JSONObject(json);
 
-        System.out.println("Json" + json );
+        int score = obj.getInt("score");
 
-        score = obj.getInt("score");
-
-        System.out.println("EndScore" +  score);
         return score;
     }
 }

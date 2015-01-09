@@ -154,6 +154,7 @@ public class QuestActivity extends BaseActivity /*implements OnItemClickListener
 
         for (Quest quest : quests) {
             values.add(quest.getName()); //speichert die Namen der Quest in die ArrayList
+            System.out.println("dtRegistration: " + quest.getDtRegistration());
         }
 
         ExpandableListAdapter adapter = new ExpandableListAdapter(getApplicationContext(), values, quests, userQuestMap, userId, this);

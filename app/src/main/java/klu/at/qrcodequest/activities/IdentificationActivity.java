@@ -103,8 +103,10 @@ public class IdentificationActivity extends BaseActivity implements OnMyLocation
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        initiateData();
 
+
+        initiateData();
+        System.out.println("OnCREATEwird aufgerfuen dtRegistration:" + dtRegistration);
         //Layout für NFC
         if(dtRegistration == 3){
             setContentView(R.layout.activity_nfc);
@@ -402,7 +404,7 @@ public class IdentificationActivity extends BaseActivity implements OnMyLocation
     @Override
     public void onMyLocationChange(Location location) {
         Toast.makeText(getApplicationContext(), "Latitude: " + location.getLatitude() + "Longitude: " + location.getLongitude() + "Genauigkeit: " + location.getAccuracy(), Toast.LENGTH_SHORT).show();
-
+        System.out.println("Latitude: " + location.getLatitude() + "Longitude: " + location.getLongitude() + "Genauigkeit: " + location.getAccuracy());
         latitude = location.getLatitude();
         longitude = location.getLongitude();
         accuracy = location.getAccuracy();
@@ -421,6 +423,7 @@ public class IdentificationActivity extends BaseActivity implements OnMyLocation
 
                    returnUnfinishedQuestions(node);
                 }
+                System.out.println("" +d);
                 Toast.makeText(getApplicationContext(), "" + d, Toast.LENGTH_SHORT).show();
 
 
@@ -563,6 +566,7 @@ public class IdentificationActivity extends BaseActivity implements OnMyLocation
             new UserQuestNodeTask().execute(userQuestPk, node.getId());
 
         }
+        finish();
         Intent questions = new Intent(getApplicationContext(), QuestionsActivity.class);
 
         Data data = (Data) getApplicationContext();
