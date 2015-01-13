@@ -6,4 +6,9 @@
         android:icon="@drawable/ic_action_settings"
         app:showAsAction="always" />
 
+    <item android:id="@+id/action_information"
+        android:title="@string/action_settings"
+        android:icon="@drawable/ic_i"
+        app:showAsAction="always" />
+
 </menu>

@@ -1,5 +1,9 @@
 package klu.at.qrcodequest.activities;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -88,6 +92,25 @@ public class BestlistActivity extends BaseActivity {
 
 //    		Drawable hintergrund = getResources().getDrawable(R.drawable.bestenliste_style); //
 
+
+            int[] attrs = {android.R.attr.textColorSecondary};
+            SharedPreferences sharedPreferences = getSharedPreferences("Settings", Context.MODE_PRIVATE);
+            int themeRessource = sharedPreferences.getInt("theme", R.style.AppTheme);
+
+            switch (themeRessource) {
+                case R.style.AppTheme:
+                    text1.setBackgroundResource(R.drawable.bestenliste_row1);
+                    text2.setBackgroundResource(R.drawable.bestenliste_style2);
+                    text3.setBackgroundResource(R.drawable.bestenliste_style2);
+                    text4.setBackgroundResource(R.drawable.bestenliste_style2);
+                    break;
+                case R.style.AppTheme_Dark:
+                    text1.setBackgroundResource(R.drawable.bestenliste_row1_dark);
+                    text2.setBackgroundResource(R.drawable.bestenliste_style2_dark);
+                    text3.setBackgroundResource(R.drawable.bestenliste_style2_dark);
+                    text4.setBackgroundResource(R.drawable.bestenliste_style2_dark);
+                    break;
+            }
             //textViews erhalten einen Hintergrund mit schwarzem Rahmen für die Tabellenansicht
             text1.setBackgroundResource(R.drawable.bestenliste_row1);
             text2.setBackgroundResource(R.drawable.bestenliste_style2);

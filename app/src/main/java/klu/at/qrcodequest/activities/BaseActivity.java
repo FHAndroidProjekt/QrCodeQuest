@@ -59,6 +59,9 @@ public abstract class BaseActivity extends ActionBarActivity {
             case R.id.action_settings:
                 startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
                 return true;
+            case R.id.action_information:
+
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

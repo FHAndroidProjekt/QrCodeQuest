@@ -38,6 +38,7 @@ public class QuestionsActivity extends BaseActivity {
     private ProgressBar bar;
     private TextView loadQuestionsTextView;
     private Data data;
+    //46.6104597 14.3046042
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -211,15 +212,10 @@ public class QuestionsActivity extends BaseActivity {
         return scoreJSONObject;
     }
 
-    private void changeActivity(Class newActivity) {
-        Intent nodeIntent = new Intent (getApplicationContext(), newActivity);
+    private void changeActivity() {
+        Intent nodeIntent = new Intent (getApplicationContext(), IdentificationActivity.class);
         nodeIntent.putExtra("finished", true);
         startActivity(nodeIntent);
         finish();
-    }
-
-    private void changeActivity() {
-
-        changeActivity(IdentificationActivity.class);
     }
 }
