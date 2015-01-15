@@ -1,5 +1,7 @@
 package klu.at.qrcodequest.activities;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.TypedArray;
@@ -60,7 +62,7 @@ public abstract class BaseActivity extends ActionBarActivity {
                 startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
                 return true;
             case R.id.action_information:
-
+                showInfo();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -94,6 +96,25 @@ public abstract class BaseActivity extends ActionBarActivity {
         } catch (Exception e) {
 
         }
+    }
+
+    private void showInfo(){
+
+        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+
+        alertDialog.setTitle("Info");
+
+        alertDialog.setMessage(("Programmierer:\nMessner Dominik & Kainz Alexander"));
+
+        alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+        alertDialog.show();
+
+
     }
 
 }

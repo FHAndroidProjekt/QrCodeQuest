@@ -57,7 +57,9 @@
         android:layout_below="@id/myToolbar"
         android:background="@drawable/textfield_style1"
         android:inputType="textPersonName"
-        android:singleLine="true" />
+        android:textColor="#000000"
+        android:singleLine="true"
+        android:textCursorDrawable="@null"/>
 
     <EditText
         android:id="@+id/editTextNachname"
@@ -70,8 +72,10 @@
         android:layout_toEndOf="@+id/textViewLocation"
         android:layout_toRightOf="@+id/textViewLocation"
         android:background="@drawable/textfield_style1"
+        android:textColor="#000000"
         android:inputType="textPersonName"
-        android:singleLine="true" />
+        android:singleLine="true"
+        android:textCursorDrawable="@null"/>
 
     <EditText
         android:id="@+id/editTextSpitzname"
@@ -84,8 +88,11 @@
         android:layout_below="@+id/editTextNachname"
         android:layout_marginTop="26dp"
         android:background="@drawable/textfield_style1"
+        android:textColor="#000000"
         android:inputType="textNoSuggestions"
-        android:singleLine="true" />
+        android:singleLine="true"
+        android:cursorVisible="true"
+        android:textCursorDrawable="@null"/>
 
     <CheckBox
         android:id="@+id/checkBox"

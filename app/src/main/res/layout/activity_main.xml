@@ -23,13 +23,13 @@
         android:id="@+id/listView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/weiter"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
         android:padding="@dimen/activity_horizontal_margin"
         android:childDivider="@android:color/transparent"
         android:groupIndicator="@android:color/transparent"
-        android:layout_below="@+id/myToolbar" >
+        android:layout_below="@+id/textView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/weiter">
     </ExpandableListView>
     
     <ProgressBar android:indeterminate="true"
@@ -40,4 +40,16 @@
                  android:layout_centerVertical="true"
                  android:layout_centerHorizontal="true"
                  android:visibility="visible" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/scorevalue"
+        android:textColor="#FFFFFF"
+        android:id="@+id/textView"
+        android:layout_below="@+id/myToolbar"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="5sp"/>
 </RelativeLayout>

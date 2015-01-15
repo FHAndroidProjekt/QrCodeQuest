@@ -28,20 +28,17 @@ public class ThemeActivity extends BaseActivity {
         createActionBar("Themenauswahl");
 
         ListView listView = (ListView) findViewById(R.id.listViewSettings);
-        String[] items = {"FH Kärnten", "Material Light Green", "Material Dark"};
-        int[] colors = {Color.RED, Color.GREEN, Color.DKGRAY};
+        String[] items = {"Material Light Green", "Material Dark"};
+        int[] colors = {Color.GREEN, Color.DKGRAY};
         listView.setAdapter(new SettingsListAdapter(this, R.layout.activity_settings, R.id.textSettings, R.id.imageArrow, items, colors));
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
                 switch (position) {
                     case 0:
-                        changeTheme(R.style.AppTheme);
-                        break;
-                    case 1:
                         changeTheme(R.style.AppTheme_LightGreen);
                         break;
-                    case 2:
+                    case 1:
                         changeTheme(R.style.AppTheme_Dark);
                         break;
                     default:

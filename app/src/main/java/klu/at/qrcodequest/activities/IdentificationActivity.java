@@ -90,6 +90,7 @@ public class IdentificationActivity extends BaseActivity implements OnMyLocation
 
     //Variablen spezifisch für QR
     private Button btscan;
+    private TextView scoreValue;
 
     //Variablen spezifisch für Google Maps
     private GoogleMap map;
@@ -110,11 +111,14 @@ public class IdentificationActivity extends BaseActivity implements OnMyLocation
         //Layout für NFC
         if(dtRegistration == 3){
             setContentView(R.layout.activity_nfc);
+            scoreValue = (TextView) findViewById(R.id.textView);
         }
         //Layout für QR
         if(dtRegistration == 2){
             setContentView(R.layout.activity_main);
             btscan = (Button)findViewById(R.id.weiter);
+            scoreValue = (TextView) findViewById(R.id.textView);
+
 
             //setOnClickListener für den Scannnen-Button
             btscan.setOnClickListener(new View.OnClickListener() {
@@ -535,6 +539,7 @@ public class IdentificationActivity extends BaseActivity implements OnMyLocation
             if(dtRegistration == 2 || dtRegistration == 3){
                 bar.setVisibility(View.INVISIBLE);
                 adapter = new ExpandableListViewNodes(getApplicationContext(), nodes, nodeIds, finishedNodeIds);
+                scoreValue.setText("Punktezahl: " + endScore);
                 list.setAdapter(adapter);
             }
             if(dtRegistration == 4){

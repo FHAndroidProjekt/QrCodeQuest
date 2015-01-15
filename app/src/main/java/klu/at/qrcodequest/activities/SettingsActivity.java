@@ -31,9 +31,9 @@ public class SettingsActivity extends BaseActivity {
         createActionBar("Einstellungen");
 
         ListView listView = (ListView) findViewById(R.id.listViewSettings);
-        String[] items = {"Design", "Begrüßung aktivieren", "Alle Fortschritte zurücksetzen"};
+        String[] items = {"Design", "Begrüßung aktivieren"};
         int[] extra = {1, 2, 0}; // 1:arrow, 2:switch
-        int[] colors = {textColor2, textColor2, Color.BLUE};
+        int[] colors = {textColor2, textColor2};
         listView.setAdapter(new SettingsListAdapter(this, R.layout.activity_settings, R.id.textSettings, R.id.imageArrow, items, extra, colors));
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
