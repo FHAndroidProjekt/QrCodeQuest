@@ -385,7 +385,7 @@ public class IdentificationActivity extends BaseActivity implements OnMyLocation
 
         if(result != null) {
             if (result.getContents() == null) {
-                Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
+//                Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
             } else {
                 for (Node node : nodes) {
                     if (node.getRegistrationTarget1() != null && node.getRegistrationTarget1().equals(result.getContents())) {
@@ -419,12 +419,12 @@ public class IdentificationActivity extends BaseActivity implements OnMyLocation
 
                 d = Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2)) * 1000;
 
-                if (d <= 100) {
+                if (d <= 10) {
 
                    returnUnfinishedQuestions(node);
                 }
                 System.out.println("" +d);
-                Toast.makeText(getApplicationContext(), "" + d, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getApplicationContext(), "" + d, Toast.LENGTH_SHORT).show();
 
 
             }
