@@ -1,6 +1,10 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
 
     <include layout="@layout/toolbar"
         android:id="@+id/myToolbar"/>
@@ -23,13 +27,13 @@
         android:id="@+id/listView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/weiter"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:padding="@dimen/activity_horizontal_margin"
         android:childDivider="@android:color/transparent"
         android:groupIndicator="@android:color/transparent"
-        android:layout_below="@+id/textView"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_above="@+id/weiter">
+        android:layout_below="@+id/myToolbar" >
     </ExpandableListView>
     
     <ProgressBar android:indeterminate="true"
@@ -40,17 +44,25 @@
                  android:layout_centerVertical="true"
                  android:layout_centerHorizontal="true"
                  android:visibility="visible" />
+    </RelativeLayout>
+    
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#88666666" >
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/scorevalue"
-        android:textColor="#FFFFFF"
-        android:id="@+id/textView"
-        android:layout_below="@+id/myToolbar"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="5sp"/>
-</RelativeLayout>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="OK"
+            android:id="@+id/button2"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="72dp"
+            android:layout_marginEnd="72dp"
+            android:layout_marginBottom="66dp" />
+    </RelativeLayout>
+</FrameLayout>
 
+    

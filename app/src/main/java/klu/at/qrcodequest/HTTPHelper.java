@@ -16,22 +16,34 @@ import java.io.IOException;
 
 public class HTTPHelper {
 
+    /**
+     * GET-Request mit der OkHttp-Library
+     * @param urlString Aufgerufene URL
+     * @return Antwort als String
+     * @throws IOException
+     */
     public static String makeGetRequest(String urlString) throws IOException {
-
         OkHttpClient httpClient = new OkHttpClient();
-        Request request = new Request.Builder()
+        Request request = new Request.Builder() // GET Anfrage bauen
                 .url(urlString)
                 .build();
-        Response response = httpClient.newCall(request).execute();
+        Response response = httpClient.newCall(request).execute(); // Anfrage ausführen und abspeichern
         if (!response.isSuccessful()) {
+            // Fehlerbehandlung
             throw new IOException("falseStatusCode");
         }
-        return response.body().string();
+        return response.body().string(); // Antwort in String umwandeln
     }
 
-
+    /**
+     * POST-Request mit der OkHttp-Library
+     * @param urlString Aufgerufene URL
+     * @param postParameters POST-Parameter als Formular (parameter1=x&...)
+     * @return Antwort als StringBuffer
+     * @throws IOException
+     */
     public static StringBuffer makePostRequest(@SuppressWarnings("SameParameterValue") String urlString, String postParameters) throws IOException {
-        MediaType mediaType = MediaType.parse("application/x-www-form-urlencoded");
+        MediaType mediaType = MediaType.parse("application/x-www-form-urlencoded"); //Formular (parameter1=x&...)
         OkHttpClient httpClient = new OkHttpClient();
         RequestBody requestBody = RequestBody.create(mediaType, postParameters);
         Request request = new Request.Builder()
@@ -42,6 +54,13 @@ public class HTTPHelper {
         return new StringBuffer(response.body().string());
     }
 
+    /**
+     * POST-Request als JSON mit der OkHttp-Library
+     * @param urlString Aufgerufene URL
+     * @param postParameters JSON-String, der gesendet werden soll
+     * @return Antwort als String
+     * @throws IOException
+     */
     public static String makeJSONPost(String urlString, String postParameters) throws IOException {
         MediaType mediaType = MediaType.parse("application/json");
         OkHttpClient httpClient = new OkHttpClient();
@@ -55,6 +74,12 @@ public class HTTPHelper {
         return response.body().string();
     }
 
+    /**
+     * POST-Request als JSON mit der Volley-Library, nur sinnvoll wenn keine Antwort vom Server benötigt
+     * @param urlString Aufgerufene URL
+     * @param postParameters JSON-String, der gesendet werden soll
+     * @param context Context für das Singleton, sollte Application Context sein
+     */
     public static void makeJSONPost (String urlString, JSONObject postParameters, Context context) {
         JsonObjectRequest postRequest = new JsonObjectRequest(com.android.volley.Request.Method.POST, urlString, postParameters,
                 new com.android.volley.Response.Listener<JSONObject>() {

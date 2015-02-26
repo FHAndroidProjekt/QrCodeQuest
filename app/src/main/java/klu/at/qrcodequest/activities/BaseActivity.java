@@ -28,14 +28,19 @@ public abstract class BaseActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // Einstellungen mit dem Namen Settings werden eingelesen.
         sharedPreferences = getSharedPreferences("Settings", MODE_PRIVATE);
-        theme = sharedPreferences.getInt("theme", R.style.AppTheme);
-        setTheme(theme);
+        theme = sharedPreferences.getInt("theme", R.style.AppTheme); // Thema wird aus den Einstellungen ausgelesen
+        setTheme(theme); // Thema wird für die Activity gesetzt
         getAttributes();
         super.onCreate(savedInstanceState);
 
     }
 
+    /**
+     * Fügt die ToolBar als ActionBar in der aktuellen Activity hinzu.
+     * @param text Der Titel in der ActionBar
+     */
     protected void createActionBar(String text) {
         toolbar = (Toolbar) findViewById(R.id.myToolbar);
         toolbar.setTitle(text);
@@ -84,7 +89,10 @@ public abstract class BaseActivity extends ActionBarActivity {
         }
     }
 
-    protected void getAttributes() { // Gets the Attributes of the current applied theme
+    /**
+     * Gets the Attributes of the current applied theme
+     */
+    protected void getAttributes() {
         int[] attrs = {android.R.attr.textColorPrimary, android.R.attr.textColorSecondary, android.R.attr.windowBackground};
         int themeRessource = sharedPreferences.getInt("theme", R.style.AppTheme);
         @SuppressWarnings("ResourceType")
