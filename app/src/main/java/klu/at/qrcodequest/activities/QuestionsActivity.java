@@ -1,9 +1,7 @@
 package klu.at.qrcodequest.activities;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
@@ -12,7 +10,6 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import klu.at.qrcodequest.*;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -22,7 +19,16 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import klu.at.qrcodequest.Data;
+import klu.at.qrcodequest.HTTPHelper;
+import klu.at.qrcodequest.Node;
+import klu.at.qrcodequest.Question;
+import klu.at.qrcodequest.R;
+import klu.at.qrcodequest.VolleySingleton;
 
 public class QuestionsActivity extends BaseActivity {
 
@@ -31,7 +37,6 @@ public class QuestionsActivity extends BaseActivity {
     private int questionNumber = 0;
     private int[] questionIDs;
     private Node node;
-    private Quest quest;
     private List<Integer> randomKeys;
     int finishedRespones = 0;
     String postUrl = "http://193.171.127.102:8080/Quest/score/save.json";
@@ -47,7 +52,6 @@ public class QuestionsActivity extends BaseActivity {
 
         data = (Data) getApplicationContext();
         node = data.getNode();
-        quest = data.getQuest();
         questionIDs = node.getUnfinishedQuestionIDs();
 
         createActionBar(node.getName());

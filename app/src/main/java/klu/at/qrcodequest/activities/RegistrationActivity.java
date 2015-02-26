@@ -58,18 +58,18 @@ public class RegistrationActivity extends BaseActivity {
                 spitzname = spitznameText.getText().toString();
                 useName = checkBox.isChecked();
 
-                if (!useName) {
+                if (!useName) { // Wenn kein Name in der Bestenliste eingetragen werden soll
                     vorname = "unknown";
                     nachname = "unknown";
                 }
 
-                if (!spitzname.matches("^[A-Za-z0-9öäüÜÄÖ:)(,._-]{3,15}$")) {
+                if (!spitzname.matches("^[A-Za-z0-9öäüÜÄÖß:)(,._-]{3,15}$")) {
                     if (spitzname.matches("^.{0,3}$")) {
                         Toast.makeText(getApplicationContext(), "Bitte geben Sie einen Spitznamen ein!", Toast.LENGTH_LONG).show();
-                    } else if (!spitzname.matches("^[A-Za-zöäüÜÄÖ]*$")) {
+                    } else if (!spitzname.matches("^[A-Za-zöäüÜÄÖß]*$")) {
                         Toast.makeText(getApplicationContext(), "Im Spitznamen sind nur folgende Sonderzeichen erlaubt: ,._-:()", Toast.LENGTH_LONG).show();
                     }
-                } else if ((!vorname.matches("^[A-Za-zöäüÜÄÖ]{3,15}$") || !nachname.matches("^[A-Za-zöäüÜÄÖ]{3,15}$")) && useName) {
+                } else if ((!vorname.matches("^[A-Za-zöäüÜÄÖß]{3,15}$") || !nachname.matches("^[A-Za-zöäüÜÄÖ]{3,15}$")) && useName) {
                     Toast.makeText(getApplicationContext(), "Bitte geben Sie einen gültigen Namen ein!", Toast.LENGTH_LONG).show();
 
                 } else { //Alle Eingaben valid
@@ -95,6 +95,7 @@ public class RegistrationActivity extends BaseActivity {
         @Override
         protected Void doInBackground(Void... arg0) {
             try {
+                // Überprüfen ob Benutzername bereits verwendet wird
                 if (!HTTPHelper.makeGetRequest("http://193.171.127.102:8080/Quest/user/exists?nickname=" + spitzname).equals("[]")) {
                     existing = true;
                     return null;

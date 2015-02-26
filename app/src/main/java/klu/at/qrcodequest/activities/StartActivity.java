@@ -1,17 +1,13 @@
 package klu.at.qrcodequest.activities;
 
-import android.animation.Animator;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.app.ActionBarActivity;
-import android.transition.Explode;
+import android.provider.Settings.Secure;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.ViewAnimationUtils;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -27,7 +23,6 @@ import org.json.JSONException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-import klu.at.qrcodequest.AppDown;
 import klu.at.qrcodequest.Data;
 import klu.at.qrcodequest.R;
 import klu.at.qrcodequest.User;
@@ -39,7 +34,6 @@ public class StartActivity extends BaseActivity {
     private Button start;
     private Typeface typeface;
     private String userID;
-
 
     @Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -61,19 +55,19 @@ public class StartActivity extends BaseActivity {
 
         getUser();
     }
-	
+
 	private String sha1(String s) {
         MessageDigest md = null;
         try {
-            md = MessageDigest.getInstance("SHA-1");
+            md = MessageDigest.getInstance("SHA-1"); //Hash-Funktion
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
-        assert md != null; //Programm bricht ab wenn md null
-        md.update(s.getBytes());
-        byte[] bytes = md.digest();
+        assert md != null; //Programm bricht ab, wenn md null
+        md.update(s.getBytes()); //Eingabe in Hashwert
+        byte[] bytes = md.digest(); //Speichert Hashwert (binär) in byte[]
         StringBuilder buffer = new StringBuilder();
-        for (byte aByte : bytes) {
+        for (byte aByte : bytes) { //Speichert den Hashwert in einen StringBuffer um
             String tmp = Integer.toString((aByte & 0xff) + 0x100, 16).substring(1);
             buffer.append(tmp);
         }
@@ -81,7 +75,8 @@ public class StartActivity extends BaseActivity {
     }
 
     private void getUser() {
-        userID = android.provider.Settings.Secure.getString(getContentResolver(), android.provider.Settings.Secure.ANDROID_ID);
+        userID = Secure.getString(getContentResolver(),
+                Secure.ANDROID_ID);
         userID = sha1(userID);
 
         final String url = "http://193.171.127.102:8080/Quest/user/get?userId=" + userID;
@@ -89,7 +84,7 @@ public class StartActivity extends BaseActivity {
             @Override
             public void onResponse(JSONArray response) {
                 try {
-                    if (response.toString().equals("[]")) {
+                    if (response.toString().equals("[]")) { // User existiert nicht
                         intent = new Intent(getApplicationContext(), RegistrationActivity.class);
                         intent.putExtra("userID", userID);
                         startTimer();
@@ -104,10 +99,10 @@ public class StartActivity extends BaseActivity {
                         intent = new Intent(getApplicationContext(), QuestActivity.class);
 
                         SharedPreferences preferences = getSharedPreferences("Settings", MODE_PRIVATE);
-                        if (preferences.getBoolean("Intro", true)) { // Begrüßung
+                        if (preferences.getBoolean("Intro", true)) { // Wenn Begrüßung aktiviert
 
                             TextView welcomeUser = (TextView) findViewById(R.id.textViewUser);
-                            welcomeUser.setTypeface(typeface);
+                            welcomeUser.setTypeface(typeface); // Schriftart
                             if (user.getFirstname().equals("unknown")) {
                                 welcomeUser.setText("zurück " + user.getNickname() + "!");
                             } else {
@@ -115,13 +110,11 @@ public class StartActivity extends BaseActivity {
                             }
 
                             startTimer();
-                        } else { // Wenn Begrüßung deaktiviert
+                        } else {
                             startActivity(intent);
-                            overridePendingTransition(R.anim.fade_in, R.anim.abc_fade_out);
-                            finish();
+                            overridePendingTransition(R.anim.fade_in, R.anim.abc_fade_out); // Animation
+                            finish(); // Schließt Activity
                         }
-
-
                     }
                     ProgressBar progressBar = (ProgressBar) findViewById(R.id.marker_progress);
                     progressBar.setVisibility(View.INVISIBLE);

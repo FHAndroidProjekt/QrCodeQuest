@@ -115,10 +115,10 @@ public class BestlistActivity extends BaseActivity {
                     break;
             }
             //textViews erhalten einen Hintergrund mit schwarzem Rahmen für die Tabellenansicht
-//            text1.setBackgroundResource(R.drawable.bestenliste_row1);
-//            text2.setBackgroundResource(R.drawable.bestenliste_style2);
-//            text3.setBackgroundResource(R.drawable.bestenliste_style2);
-//            text4.setBackgroundResource(R.drawable.bestenliste_style2);
+            text1.setBackgroundResource(R.drawable.bestenliste_row1);
+            text2.setBackgroundResource(R.drawable.bestenliste_style2);
+            text3.setBackgroundResource(R.drawable.bestenliste_style2);
+            text4.setBackgroundResource(R.drawable.bestenliste_style2);
 
 
 //    		text1.setPadding(15, 0, 0, 0);
