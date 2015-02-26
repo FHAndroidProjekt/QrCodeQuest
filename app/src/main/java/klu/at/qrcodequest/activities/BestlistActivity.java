@@ -69,6 +69,8 @@ public class BestlistActivity extends BaseActivity {
     public void setRows(ArrayList<Score> scores) {
 
         TableLayout layout = (TableLayout) findViewById(R.id.table);
+
+
         int length = scores.size(); //Länge der Array List abfragen
 
 
@@ -76,6 +78,7 @@ public class BestlistActivity extends BaseActivity {
 
             TableRow row = new TableRow(this); //Erstellen einer neuen Reihe
             TableRow.LayoutParams layoutp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
+
             layoutp.setMargins(2, 2, 2, 2);
             row.setLayoutParams(layoutp);
 
