@@ -66,9 +66,8 @@ public class QuestionsActivity extends BaseActivity {
 
         for (int i = 0; i < questionIDs.length; i++) {
             final String url = "http://193.171.127.102:8080/Quest/question/show/" + questionIDs[i] + ".json";
-            final int finalI = i;
+            final int finalI = i; // Listener benötigt final bei lokalen Variablen (innere Klasse)
 
-            // prepare the Request
             JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
@@ -135,20 +134,25 @@ public class QuestionsActivity extends BaseActivity {
 
         TextView questionView = (TextView) findViewById(R.id.textViewQuestion);
         ViewGroup verticalLayout = (ViewGroup) findViewById(R.id.linearLayoutQuestions);
-        verticalLayout.removeAllViews(); //Removes Buttons from last Question
+        verticalLayout.removeAllViews(); //Removes Buttons(Answers) from last Question
         Button bt;
         View.OnClickListener buttonListener;
 
+        // Fragetext
         questionView.setText(questions.get(questionNumber).getQuestionName());
 
-        for (int i : randomKeys) {
+        for (int i : randomKeys) { // Alle Antwortmöglichkeiten durchgehen
+            // Wählt eine zufällige Antwort aus. Doppelte Treffer sind dank
+            // der randomKeys-Arraylist nicht möglich
             String answer = answerSparseArray.get(i);
 
+            // Button wird erstellt und zum LinearLayout hinzugefügt
             bt = new Button(this);
             bt.setText(answer);
             bt.setTextSize(20);
             bt.setBackgroundResource(R.drawable.questionbutton);
-            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             layoutParams.setMargins(0, 0, 15, 3);
             bt.setLayoutParams(layoutParams);
             verticalLayout.addView(bt);
@@ -156,17 +160,19 @@ public class QuestionsActivity extends BaseActivity {
             buttonListener = new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Button b = (Button) v;
-                    if (answerSparseArray.indexOfValue(b.getText().toString()) == 0) {
+                    Button b = (Button) v; // View wird als Button gespeichert
+                    // Durchsucht das SparseArray nach dem String des Buttons und gibt den Key zurück
+                    int key = answerSparseArray.indexOfValue(b.getText().toString());
+                    if (key == 0) { // Wenn Key 0 -> richtige Antwort
                         HTTPHelper.makeJSONPost(postUrl, buildJSONObjectPost(true, questions.get(questionNumber).getId()), getApplicationContext());
                     } else {
-                    	System.out.println("" + buildJSONObjectPost(true, questions.get(questionNumber).getId()));
                         HTTPHelper.makeJSONPost(postUrl, buildJSONObjectPost(false, questions.get(questionNumber).getId()), getApplicationContext());
                     }
 
+                    // Prüft, ob es noch weitere Fragen gibt
                     if (questionNumber < questions.size()-1) {
                         questionNumber++;
-                        shuffleAnswers();
+                        shuffleAnswers(); // Zufallszahlen für nächste Frage neu füllen
                     } else {
                     	changeActivity();
                     }
@@ -178,16 +184,16 @@ public class QuestionsActivity extends BaseActivity {
 
     }
 
+    /**
+     * Füllt eine Arraylist mit Zahlen und mischt diese durch. Die Anzahl der Zahlen entspricht der Anzahl der Antwortmöglichkeiten
+     */
     public void shuffleAnswers() {
         answerSparseArray = questions.get(questionNumber).getAnswerSparseArray();
-//        Integer[] numbers = new Integer[answerSparseArray.size()];
-        randomKeys = new ArrayList<>(answerSparseArray.size()+5);
+        randomKeys = new ArrayList<>();
         for (int i = 0; i < answerSparseArray.size(); i++) {
-//            numbers[i] = i;
             randomKeys.add(i);
         }
 
-//        randomKeys = Arrays.asList(numbers);
         Collections.shuffle(randomKeys); //Zufällige Keys, um die Antworten zu mischen
     }
 

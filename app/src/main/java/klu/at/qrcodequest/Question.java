@@ -20,17 +20,6 @@ public class Question {
         this.active = active;
         this.name = name;
         this.description = descr;
-        this.option1 = o1;
-        this.option2 = o2;
-        this.option3 = o3;
-        this.option4 = o4;
-
-        this.option5 = o5;
-        this.option6 = o6;
-        this.option7 = o7;
-        this.option8 = o8;
-        this.option9 = o9;
-        this.option10 = o10;
 
         String[] answersString = {o1,o2,o3,o4,o5,o6,o7,o8,o9,o10};
         createSparseArray(answersString);
@@ -41,7 +30,11 @@ public class Question {
         return answerSparseArray;
     }
 
-    public void createSparseArray(String[] answersString){
+    /**
+     * Erstellt ein SparseArray aus den Antwortmöglichkeiten
+     * @param answersString Die Antworten als String[]
+     */
+    private void createSparseArray(String[] answersString){
         answerSparseArray = new SparseArray<String>(); //More efficient than Hashmap
         int i = 0;
         for (String answer : answersString) {

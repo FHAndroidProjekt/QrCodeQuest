@@ -17,10 +17,7 @@ public class Node {
 	private String description;
 	private String location;
     private int[] questionIDs;
-    private int[] finishedQuestionIDs;
     private int[] unfinishedQuestionIDs;
-	
-	
 	
 	
 	public Node(int questPk, boolean active, int sequence, int dtRegistration,
@@ -57,37 +54,13 @@ public class Node {
         this.unfinishedQuestionIDs = unfinishedQuestionIDs;
     }
 
-    public int getDtRegistration() {
-		return dtRegistration;
-	}
-
-	public void setDtRegistration(int dtRegistration) {
-		this.dtRegistration = dtRegistration;
-	}
-
 	public String getRegistrationTarget1() {
 		return registrationTarget1;
-	}
-
-	public void setRegistrationTarget1(String registrationTarget1) {
-		this.registrationTarget1 = registrationTarget1;
 	}
 
 	public String getRegistrationTarget2() {
 		return registrationTarget2;
 	}
-
-	public void setRegistrationTarget2(String registrationTarget2) {
-		this.registrationTarget2 = registrationTarget2;
-	}
-
-    public int[] getFinishedQuestionIDs() {
-        return finishedQuestionIDs;
-    }
-
-    public void setFinishedQuestionIDs(int[] finishedQuestionIDs) {
-        this.finishedQuestionIDs = finishedQuestionIDs;
-    }
 
     public int getId() {
 		return id;
@@ -100,24 +73,6 @@ public class Node {
 	}
 	public void setQuestPk(int questPk) {
 		this.questPk = questPk;
-	}
-	public boolean getActive() {
-		return active;
-	}
-	public void setActive(boolean active) {
-		this.active = active;
-	}
-	public int getSequence() {
-		return sequence;
-	}
-	public void setSequence(int sequence) {
-		this.sequence = sequence;
-	}
-	public int getRegistration() {
-		return dtRegistration;
-	}
-	public void setRegistration(int registration) {
-		this.dtRegistration = registration;
 	}
 	public String getName() {
 		return name;
